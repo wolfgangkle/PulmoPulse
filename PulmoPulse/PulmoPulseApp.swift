@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct PulmoPulseApp: App {
+    @StateObject private var questionnaireStore = QuestionnaireStore()
+
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(questionnaireStore)
         }
     }
 }
+

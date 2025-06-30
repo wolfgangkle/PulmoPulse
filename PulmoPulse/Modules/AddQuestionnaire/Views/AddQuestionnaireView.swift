@@ -5,49 +5,59 @@
 //  Created by Wolfgang Kleinhaentz on 30/06/2025.
 //
 
-
-
 import SwiftUI
 
 struct AddQuestionnaireView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var questionnaireStore: QuestionnaireStore
 
     @State private var answers: [String: String] = [:]
 
-    // Placeholder questions (easy to update later)
-    let questions: [QuestionFieldModel] = [
-        QuestionFieldModel(id: "q1", label: "How do you feel today?"),
-        QuestionFieldModel(id: "q2", label: "Any shortness of breath?"),
-        QuestionFieldModel(id: "q3", label: "Sleep quality last night?")
-    ]
+    // Use shared schema from defaultQuestionnaireSchema.swift
+    let questions: [QuestionFieldModel] = defaultQuestionnaireSchema
 
     var body: some View {
         NavigationView {
-            Form {
+            List {
                 ForEach(questions) { question in
-                    Section(header: Text(question.label)) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(question.label)
+                            .font(.headline)
+
                         TextField("Your answer...", text: Binding(
                             get: { answers[question.id] ?? "" },
                             set: { answers[question.id] = $0 }
                         ))
+                        .textFieldStyle(.roundedBorder)
                     }
+                    .padding(.vertical, 8)
                 }
             }
+            .listStyle(.plain)
+            .background(Color.white)
             .navigationTitle("New Questionnaire")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button {
                         dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .foregroundColor(.red)
                     }
                 }
+
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button {
                         saveQuestionnaire()
                         dismiss()
+                    } label: {
+                        Text("Save")
+                            .foregroundColor(.red)
                     }
                 }
             }
         }
+        .background(Color.white)
     }
 
     private func saveQuestionnaire() {
@@ -56,7 +66,8 @@ struct AddQuestionnaireView: View {
             timestamp: Date(),
             answers: answers
         )
-        QuestionnaireStorageManager.save(entry)
+        
+        questionnaireStore.add(entry)
     }
 
 }

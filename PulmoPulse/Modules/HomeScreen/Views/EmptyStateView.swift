@@ -5,27 +5,35 @@
 //  Created by Wolfgang Kleinhaentz on 30/06/2025.
 //
 
-
 import SwiftUI
 
 struct EmptyStateView: View {
     var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "doc.text.magnifyingglass")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 80, height: 80)
-                .foregroundColor(.gray)
+        VStack {
+            Spacer()
 
-            Text("No Questionnaires Yet")
-                .font(.title2)
-                .foregroundColor(.gray)
+            VStack(spacing: 16) {
+                Image(systemName: "doc.text.magnifyingglass")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                    .foregroundColor(.gray)
 
-            Text("Tap the + button to create your first entry.")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
+                Text("No Questionnaires Yet")
+                    .font(.title2)
+                    .foregroundColor(.gray)
+
+                Text("Tap the + button to create your first entry.")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 24)
+            }
+
+            Spacer()
         }
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white)
     }
 }
+

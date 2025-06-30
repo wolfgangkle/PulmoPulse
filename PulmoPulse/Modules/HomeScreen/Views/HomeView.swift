@@ -12,23 +12,25 @@ struct HomeView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                QuestionnaireListView() // <-- this will show the saved list
+            VStack(spacing: 0) {
+                QuestionnaireListView()
                 Spacer()
             }
-            .navigationTitle("Home")
+            .navigationTitle("Questionnaires")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         showingAddSheet = true
                     }) {
                         Image(systemName: "plus")
+                            .foregroundColor(.red) // 🔴 Make the symbol red
                     }
                 }
             }
+            .background(Color.white) // make sure background is white
         }
         .sheet(isPresented: $showingAddSheet) {
-            AddQuestionnaireView() // <-- we’ll build this next
+            AddQuestionnaireView()
         }
     }
 }
