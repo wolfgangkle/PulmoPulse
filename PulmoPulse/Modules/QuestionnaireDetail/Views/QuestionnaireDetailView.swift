@@ -6,6 +6,7 @@
 //  Created by Wolfgang Kleinhaentz on 30/06/2025.
 //
 
+
 import SwiftUI
 
 struct QuestionnaireDetailView: View {
@@ -40,7 +41,6 @@ struct QuestionnaireDetailView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle("Details")
-        .background(Color.white)
+        .tint(.red) // 🔴 ensures back button text is red
     }
 }

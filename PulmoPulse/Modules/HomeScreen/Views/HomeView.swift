@@ -11,7 +11,7 @@ struct HomeView: View {
     @State private var showingAddSheet = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 QuestionnaireListView()
                 Spacer()
@@ -27,8 +27,12 @@ struct HomeView: View {
                     }
                 }
             }
-            .background(Color.white) // make sure background is white
+            .toolbarColorScheme(.light, for: .navigationBar)              // ✅ light mode for nav bar
+            .toolbarBackground(Color.white, for: .navigationBar)          // ✅ white background
+            .toolbarBackground(.visible, for: .navigationBar)             // ✅ make nav bar background visible
+            .background(Color.white)                                      // ensures content background is white
         }
+        .tint(.red) // 🔴 This line changes the back button and label color!
         .sheet(isPresented: $showingAddSheet) {
             AddQuestionnaireView()
         }

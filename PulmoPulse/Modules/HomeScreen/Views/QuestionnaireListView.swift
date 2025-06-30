@@ -43,8 +43,10 @@ struct QuestionnaireListView: View {
     }
 
     private func deleteEntry(at offsets: IndexSet) {
-        for index in offsets {
-            let entry = questionnaireStore.entries[index]
+        let sortedEntries = questionnaireStore.entries.sorted(by: { $0.timestamp > $1.timestamp })
+        let entriesToDelete = offsets.map { sortedEntries[$0] }
+
+        for entry in entriesToDelete {
             questionnaireStore.delete(entry)
         }
     }

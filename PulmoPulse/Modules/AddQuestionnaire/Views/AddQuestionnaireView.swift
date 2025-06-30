@@ -17,7 +17,7 @@ struct AddQuestionnaireView: View {
     let questions: [QuestionFieldModel] = defaultQuestionnaireSchema
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(questions) { question in
                     VStack(alignment: .leading, spacing: 4) {
