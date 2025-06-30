@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var patientStore: PatientStore
     @State private var showingAddSheet = false
+    @State private var showingDataTransferSheet = false
 
     var body: some View {
         NavigationStack {
@@ -18,28 +20,32 @@ struct HomeView: View {
             }
             .navigationTitle("Questionnaires")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showingDataTransferSheet = true
+                    }) {
+                        Image(systemName: "arrow.up.doc")
+                            .foregroundColor(.red)
+                    }
+
                     Button(action: {
                         showingAddSheet = true
                     }) {
                         Image(systemName: "plus")
-                            .foregroundColor(.red) // 🔴 Make the symbol red
+                            .foregroundColor(.red)
                     }
                 }
             }
-            .toolbarColorScheme(.light, for: .navigationBar)              // ✅ light mode for nav bar
-            .toolbarBackground(Color.white, for: .navigationBar)          // ✅ white background
-            .toolbarBackground(.visible, for: .navigationBar)             // ✅ make nav bar background visible
-            .background(Color.white)                                      // ensures content background is white
         }
-        .tint(.red) // 🔴 This line changes the back button and label color!
+        .tint(.red)
         .sheet(isPresented: $showingAddSheet) {
             AddQuestionnaireView()
+        }
+        .sheet(isPresented: $showingDataTransferSheet) {
+            DataTransferView()
+                .environmentObject(patientStore)
         }
     }
 }
 
-#Preview {
-    HomeView()
-}
 

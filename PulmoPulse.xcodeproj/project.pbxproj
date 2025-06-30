@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6A7F621C2E13365300CE5A3E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6A7F621B2E13365300CE5A3E /* FirebaseAuth */; };
+		6A7F621E2E13365300CE5A3E /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6A7F621D2E13365300CE5A3E /* FirebaseCore */; };
+		6A7F62202E13365300CE5A3E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6A7F621F2E13365300CE5A3E /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		6A753A522E12D423000C306B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -29,9 +35,22 @@
 		6A753A5B2E12D423000C306B /* PulmoPulseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PulmoPulseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6A7F62072E1324CD00CE5A3E /* Exceptions for "PulmoPulse" folder in "PulmoPulse" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6A753A432E12D421000C306B /* PulmoPulse */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6A753A462E12D421000C306B /* PulmoPulse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6A7F62072E1324CD00CE5A3E /* Exceptions for "PulmoPulse" folder in "PulmoPulse" target */,
+			);
 			path = PulmoPulse;
 			sourceTree = "<group>";
 		};
@@ -52,6 +71,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A7F621E2E13365300CE5A3E /* FirebaseCore in Frameworks */,
+				6A7F621C2E13365300CE5A3E /* FirebaseAuth in Frameworks */,
+				6A7F62202E13365300CE5A3E /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +134,9 @@
 			);
 			name = PulmoPulse;
 			packageProductDependencies = (
+				6A7F621B2E13365300CE5A3E /* FirebaseAuth */,
+				6A7F621D2E13365300CE5A3E /* FirebaseCore */,
+				6A7F621F2E13365300CE5A3E /* FirebaseFirestore */,
 			);
 			productName = PulmoPulse;
 			productReference = 6A753A442E12D421000C306B /* PulmoPulse.app */;
@@ -195,6 +220,9 @@
 			);
 			mainGroup = 6A753A3B2E12D421000C306B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6A7F621A2E13365300CE5A3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6A753A452E12D421000C306B /* Products */;
 			projectDirPath = "";
@@ -401,6 +429,9 @@
 				DEVELOPMENT_TEAM = 92KD58CVBS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PulmoPulse/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PulmoPulse;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -410,7 +441,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wolfgangkleinhaentz.PulmoPulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -430,6 +461,9 @@
 				DEVELOPMENT_TEAM = 92KD58CVBS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PulmoPulse/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PulmoPulse;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -439,7 +473,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wolfgangkleinhaentz.PulmoPulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -560,6 +594,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6A7F621A2E13365300CE5A3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.15.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6A7F621B2E13365300CE5A3E /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6A7F621A2E13365300CE5A3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		6A7F621D2E13365300CE5A3E /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6A7F621A2E13365300CE5A3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		6A7F621F2E13365300CE5A3E /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6A7F621A2E13365300CE5A3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6A753A3C2E12D421000C306B /* Project object */;
 }
