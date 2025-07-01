@@ -8,17 +8,40 @@
 import Foundation
 
 let defaultQuestionnaireSchema: [QuestionFieldModel] = [
-    QuestionFieldModel(id: "meds", label: "Did you take your medication today?", type: .yesNo),
-    QuestionFieldModel(id: "therapy", label: "Did you do your airway clearance therapy today?", type: .yesNo),
-    QuestionFieldModel(id: "inhaler", label: "Did you use your inhaler or nebulizer today?", type: .yesNo),
-    QuestionFieldModel(id: "feel", label: "How do you feel today?", type: .rating1to5),
-    QuestionFieldModel(id: "sleep", label: "How well did you sleep last night?", type: .rating1to5),
-    QuestionFieldModel(id: "breath", label: "Did you experience shortness of breath today?", type: .multipleChoice(options: ["None", "Mild", "Moderate", "Severe"])),
-    QuestionFieldModel(id: "cough", label: "Did you cough more than usual today?", type: .multipleChoice(options: ["Yes", "No", "Not sure"])),
-    QuestionFieldModel(id: "digestion", label: "Did you have any digestive issues today?", type: .multipleChoice(options: ["No", "Mild", "Severe"])),
-    QuestionFieldModel(id: "appetite", label: "How was your appetite today?", type: .rating1to5),
-    QuestionFieldModel(id: "infectionSigns", label: "Did you notice any of the following?", type: .multiSelect(options: ["Fever", "Increased mucus", "Change in mucus color", "Chest pain", "None of the above"])),
-    QuestionFieldModel(id: "exercise", label: "Did you exercise today?", type: .yesNo),
-    QuestionFieldModel(id: "hydration", label: "Did you stay hydrated today?", type: .multipleChoice(options: ["Yes", "No", "Not sure"]))
+    QuestionFieldModel(id: "meds", label: "did_you_take_your_medication".localized, type: .yesNo),
+    QuestionFieldModel(id: "therapy", label: "did_you_do_airway_clearance".localized, type: .yesNo),
+    QuestionFieldModel(id: "inhaler", label: "did_you_use_inhaler".localized, type: .yesNo),
+    QuestionFieldModel(id: "feel", label: "how_do_you_feel_today".localized, type: .rating1to5),
+    QuestionFieldModel(id: "sleep", label: "how_well_did_you_sleep".localized, type: .rating1to5),
+    QuestionFieldModel(id: "breath", label: "did_you_experience_breathlessness".localized, type: .multipleChoice(options: [
+        "none".localized,
+        "mild".localized,
+        "moderate".localized,
+        "severe".localized
+    ])),
+    QuestionFieldModel(id: "cough", label: "did_you_cough_more".localized, type: .multipleChoice(options: [
+        "yes".localized,
+        "no".localized,
+        "not_sure".localized
+    ])),
+    QuestionFieldModel(id: "digestion", label: "did_you_have_digestive_issues".localized, type: .multipleChoice(options: [
+        "no".localized,
+        "mild".localized,
+        "severe".localized
+    ])),
+    QuestionFieldModel(id: "appetite", label: "how_was_your_appetite".localized, type: .rating1to5),
+    QuestionFieldModel(id: "infectionSigns", label: "did_you_notice_infection_signs".localized, type: .multiSelect(options: [
+        "fever".localized,
+        "increased_mucus".localized,
+        "change_mucus_color".localized,
+        "chest_pain".localized,
+        "none_of_the_above".localized
+    ])),
+    QuestionFieldModel(id: "exercise", label: "did_you_exercise_today".localized, type: .yesNo),
+    QuestionFieldModel(id: "hydration", label: "did_you_stay_hydrated".localized, type: .multipleChoice(options: [
+        "yes".localized,
+        "no".localized,
+        "not_sure".localized
+    ]))
 ]
 
