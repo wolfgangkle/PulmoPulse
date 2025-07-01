@@ -64,7 +64,6 @@ struct ActivityUploader: HealthDataUploader {
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        let calendar = Calendar.current
         let kcalUnit = HKUnit.kilocalorie()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"

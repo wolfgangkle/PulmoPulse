@@ -61,7 +61,6 @@ struct HeartRateUploader: HealthDataUploader {
         completion: @escaping (Int) -> Void
     ) {
         let bpmUnit = HKUnit(from: "count/min")
-        let calendar = Calendar.current
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
 
