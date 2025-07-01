@@ -17,7 +17,7 @@ class HealthDataManager: ObservableObject {
     private var db: Firestore { Firestore.firestore() }
 
     @Published var isCancelled = false
-    var dataUploadWindowDays: Int = 5  // Adjust to change upload window size
+    var dataUploadWindowDays: Int = 180  // Adjust to change upload window size
 
     // 🔌 Registered uploaders
     private lazy var uploaders: [HealthDataUploader] = [

@@ -120,7 +120,6 @@ class DataUploader {
         let uploader = uploaders[uploaderIndex]
 
         HealthDataManager.shared.getEffectiveUploadStartDate(for: uploader.typeIdentifier, userId: userId) { startDate in
-            logHandler("📦 Uploading \(uploader.typeIdentifier) from \(startDate.formatted())…")
 
             uploader.uploadSince(
                 startDate: startDate,

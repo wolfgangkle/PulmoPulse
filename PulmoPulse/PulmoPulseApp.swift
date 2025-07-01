@@ -17,6 +17,9 @@ struct PulmoPulseApp: App {
     @StateObject private var patientStore = PatientStore()
     @State private var showPatientSetup = false
 
+    // 👇 Persisted theme selection
+    @AppStorage("appearance") private var appearance: String = "system"
+
     var body: some Scene {
         WindowGroup {
             NavigationView {
@@ -24,14 +27,13 @@ struct PulmoPulseApp: App {
                     HomeView()
                         .environmentObject(questionnaireStore)
                         .environmentObject(patientStore)
-                        .disabled(showPatientSetup) // prevent tapping behind sheet
+                        .disabled(showPatientSetup)
                 }
                 .sheet(isPresented: $showPatientSetup) {
                     PatientSetupView()
                         .environmentObject(patientStore)
                 }
                 .onAppear {
-                    // ✅ Safe to call AFTER FirebaseApp.configure()
                     if Auth.auth().currentUser == nil {
                         Auth.auth().signInAnonymously { result, error in
                             if let error = error {
@@ -44,12 +46,10 @@ struct PulmoPulseApp: App {
                         print("✅ Already signed in. UID:", Auth.auth().currentUser?.uid ?? "unknown")
                     }
 
-                    // 🔐 Request HealthKit access on first launch
                     HealthDataManager.shared.requestAuthorization { granted in
                         print(granted ? "✅ HealthKit access granted" : "❌ HealthKit access denied")
                     }
 
-                    // Show PatientSetupView if no valid patient data
                     if patientStore.patient.firstName.isEmpty ||
                         patientStore.patient.lastName.isEmpty ||
                         patientStore.patient.birthDate == nil {
@@ -57,9 +57,21 @@ struct PulmoPulseApp: App {
                     }
                 }
             }
+            .preferredColorScheme(colorSchemeFrom(appearance)) // 👈 Appearance applied here
+            .tint(.red) // 👈 Global red tint
+        }
+    }
+
+    // 👇 Helper function to resolve color scheme
+    func colorSchemeFrom(_ setting: String) -> ColorScheme? {
+        switch setting {
+        case "light": return .light
+        case "dark": return .dark
+        default: return nil // 'system' = follow device
         }
     }
 }
+
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(

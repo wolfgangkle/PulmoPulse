@@ -1,53 +1,61 @@
+
 //
-//  SleepUploader.swift
+//  StepsUploader.swift
 //  PulmoPulse
 //
 //  Created by Wolfgang Kleinhaentz on 01/07/2025.
 //
 
+
 import Foundation
 import HealthKit
 import FirebaseFirestore
 
-struct SleepUploader: HealthDataUploader {
+struct StepsUploader: HealthDataUploader {
     var dataTypes: [HKObjectType]
-    
+
     let healthStore: HKHealthStore
     let db: Firestore
     weak var manager: HealthDataManager?
 
-    var typeIdentifier: String { "sleep" }
+    var typeIdentifier: String { "steps" }
 
-    func fetchSamples(since startDate: Date, log: @escaping (String) -> Void, completion: @escaping ([HKQuantitySample]) -> Void) {
-        guard let type = HKCategoryType.categoryType(forIdentifier: .sleepAnalysis) else {
-            log("❌ Sleep type unavailable.")
+    func fetchSamples(
+        since _: Date,  // Ignored — logic now inside
+        log: @escaping (String) -> Void,
+        completion: @escaping ([HKQuantitySample]) -> Void
+    ) {
+        guard let type = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
+            log("❌ Step Count type unavailable.")
             completion([])
             return
         }
 
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [])
-        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
+        let calendar = Calendar.current
+        let fallback = calendar.date(byAdding: .day, value: -7, to: Date())!
+        let startDate = calendar.startOfDay(for: manager?.getOverrideStartDate() ?? fallback)
+        let endDate = Date()
 
-        let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sort]) { _, results, error in
-            guard let samples = results as? [HKCategorySample], error == nil else {
-                log("❌ Sleep fetch error: \(error?.localizedDescription ?? "unknown")")
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+        let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
+
+        let query = HKSampleQuery(
+            sampleType: type,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [sort]
+        ) { _, results, error in
+            guard let samples = results as? [HKQuantitySample], error == nil else {
+                log("❌ Failed to fetch step samples: \(error?.localizedDescription ?? "Unknown error")")
                 completion([])
                 return
             }
 
-            log("✅ Fetched \(samples.count) sleep samples.")
-            // Hack: Map to dummy HKQuantitySample to reuse upload logic
-            let quantitySamples = samples.map {
-                HKQuantitySample(
-                    type: HKQuantityType.quantityType(forIdentifier: .bodyMass)!,
-                    quantity: HKQuantity(unit: .count(), doubleValue: Double($0.value)),
-                    start: $0.startDate,
-                    end: $0.endDate
-                )
-            }
-            completion(quantitySamples)
+            log("👟 Fetched \(samples.count) step samples.")
+            completion(samples)
         }
 
+        log("👟 Querying raw step count samples…")
         healthStore.execute(query)
     }
 
@@ -58,63 +66,64 @@ struct SleepUploader: HealthDataUploader {
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        let collection = db
-            .collection("patients")
-            .document(userId)
-            .collection("healthData")
-            .document("sleep")
-            .collection("samples")
+        let calendar = Calendar.current
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
-        let total = samples.count
-        var uploaded = 0
-        var latestTimestamp: TimeInterval = 0
+        var grouped: [String: [Double]] = [:]
 
-        func uploadNext(index: Int) {
-            if index >= total {
-                if uploaded > 0 && !(manager?.isCancelled ?? false) {
-                    let lastDate = Date(timeIntervalSince1970: latestTimestamp)
-                    manager?.updateLastUploadDate(lastDate, userId: userId, for: typeIdentifier)
-                }
-                completion(uploaded)
-                return
-            }
+        for sample in samples {
+            if manager?.isCancelled == true { break }
 
-            if manager?.isCancelled == true {
-                log("⏹️ Upload cancelled by user after \(uploaded) samples.")
-                completion(uploaded)
-                return
-            }
-
-            let sample = samples[index]
-            let value = Int(sample.quantity.doubleValue(for: .count()))
-            let start = sample.startDate.timeIntervalSince1970
-            let end = sample.endDate.timeIntervalSince1970
-            latestTimestamp = max(latestTimestamp, end)
-
-            let data: [String: Any] = [
-                "type": "sleep",
-                "category": value, // 0 = inBed, 1 = asleep, etc.
-                "start": start,
-                "end": end
-            ]
-
-            collection.addDocument(data: data) { error in
-                if let error = error {
-                    log("❌ Upload error \(index + 1): \(error.localizedDescription)")
-                } else {
-                    uploaded += 1
-                    log("✅ Uploaded sleep sample \(index + 1) / \(total)")
-                }
-
-                progress(uploaded, total)
-
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.005) {
-                    uploadNext(index: index + 1)
-                }
-            }
+            let count = sample.quantity.doubleValue(for: .count())
+            let dateKey = formatter.string(from: sample.startDate)
+            grouped[dateKey, default: []].append(count)
         }
 
-        uploadNext(index: 0)
+        let total = grouped.count
+        var uploaded = 0
+        let group = DispatchGroup()
+        var latestDate: Date?
+
+        for (dateKey, values) in grouped {
+            guard !values.isEmpty else { continue }
+
+            let sum = values.reduce(0, +)
+            let steps = Int(sum)
+
+            let date = formatter.date(from: dateKey) ?? Date()
+            latestDate = max(latestDate ?? date, date)
+
+            let data: [String: Any] = [
+                "date": Timestamp(date: date),
+                "steps": steps,
+                "type": typeIdentifier
+            ]
+
+            group.enter()
+            db.collection("patients")
+                .document(userId)
+                .collection("healthData")
+                .document(typeIdentifier)
+                .collection("daily")
+                .document(dateKey)
+                .setData(data) { error in
+                    if let error = error {
+                        log("❌ Upload error for \(dateKey): \(error.localizedDescription)")
+                    } else {
+                        uploaded += 1
+                        log("✅ Uploaded step count for \(dateKey): \(steps) steps")
+                        progress(uploaded, total)
+                    }
+                    group.leave()
+                }
+        }
+
+        group.notify(queue: .main) {
+            if let latest = latestDate {
+                manager?.updateLastUploadDate(latest, userId: userId, for: typeIdentifier)
+            }
+            completion(uploaded)
+        }
     }
 }
-

@@ -13,7 +13,6 @@ struct AddQuestionnaireView: View {
 
     @State private var answers: [String: String] = [:]
 
-    // Use shared schema from defaultQuestionnaireSchema.swift
     let questions: [QuestionFieldModel] = defaultQuestionnaireSchema
 
     var body: some View {
@@ -33,31 +32,25 @@ struct AddQuestionnaireView: View {
                     .padding(.vertical, 8)
                 }
             }
-            .listStyle(.plain)
-            .background(Color.white)
+            .listStyle(.plain) // ✅ good for minimal UI
             .navigationTitle("New Questionnaire")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button {
+                    Button("Cancel") {
                         dismiss()
-                    } label: {
-                        Text("Cancel")
-                            .foregroundColor(.red)
                     }
+                    .foregroundColor(.red)
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button {
+                    Button("Save") {
                         saveQuestionnaire()
                         dismiss()
-                    } label: {
-                        Text("Save")
-                            .foregroundColor(.red)
                     }
+                    .foregroundColor(.red)
                 }
             }
         }
-        .background(Color.white)
     }
 
     private func saveQuestionnaire() {
@@ -66,8 +59,6 @@ struct AddQuestionnaireView: View {
             timestamp: Date(),
             answers: answers
         )
-        
         questionnaireStore.add(entry)
     }
-
 }

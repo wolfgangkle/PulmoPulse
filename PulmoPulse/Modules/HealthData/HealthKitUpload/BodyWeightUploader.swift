@@ -5,6 +5,7 @@
 //  Created by Wolfgang Kleinhaentz on 01/07/2025.
 //
 
+
 import Foundation
 import HealthKit
 import FirebaseFirestore
@@ -18,27 +19,42 @@ struct BodyWeightUploader: HealthDataUploader {
 
     var typeIdentifier: String { "bodyWeight" }
 
-    func fetchSamples(since startDate: Date, log: @escaping (String) -> Void, completion: @escaping ([HKQuantitySample]) -> Void) {
+    func fetchSamples(
+        since _: Date,
+        log: @escaping (String) -> Void,
+        completion: @escaping ([HKQuantitySample]) -> Void
+    ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .bodyMass) else {
             log("❌ Body Mass type unavailable.")
             completion([])
             return
         }
 
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [])
-        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
+        let calendar = Calendar.current
+        let fallback = calendar.date(byAdding: .day, value: -7, to: Date())!
+        let startDate = calendar.startOfDay(for: manager?.getOverrideStartDate() ?? fallback)
+        let endDate = Date()
 
-        let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sort]) { _, results, error in
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+        let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
+
+        let query = HKSampleQuery(
+            sampleType: type,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [sort]
+        ) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Body Weight fetch error: \(error?.localizedDescription ?? "unknown")")
+                log("❌ Failed to fetch weight samples: \(error?.localizedDescription ?? "Unknown error")")
                 completion([])
                 return
             }
 
-            log("✅ Fetched \(samples.count) body weight samples.")
+            log("⚖️ Fetched \(samples.count) body weight samples.")
             completion(samples)
         }
 
+        log("📥 Querying raw body weight samples…")
         healthStore.execute(query)
     }
 
@@ -49,64 +65,70 @@ struct BodyWeightUploader: HealthDataUploader {
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        let collection = db
-            .collection("patients")
-            .document(userId)
-            .collection("healthData")
-            .document("bodyWeight")
-            .collection("samples")
+        let calendar = Calendar.current
+        let unit = HKUnit.gramUnit(with: .kilo)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
-        let total = samples.count
-        var uploaded = 0
-        var latestTimestamp: TimeInterval = 0
+        // Filter to latest per day
+        var latestPerDay: [String: HKQuantitySample] = [:]
 
-        func uploadNext(index: Int) {
-            if index >= total {
-                if uploaded > 0 && !(manager?.isCancelled ?? false) {
-                    let lastDate = Date(timeIntervalSince1970: latestTimestamp)
-                    manager?.updateLastUploadDate(lastDate, userId: userId, for: typeIdentifier)
+        for sample in samples {
+            if manager?.isCancelled == true { break }
+
+            let dateKey = formatter.string(from: sample.startDate)
+            if let existing = latestPerDay[dateKey] {
+                if sample.startDate > existing.startDate {
+                    latestPerDay[dateKey] = sample
                 }
-                completion(uploaded)
-                return
-            }
-
-            if manager?.isCancelled == true {
-                log("⏹️ Upload cancelled by user after \(uploaded) samples.")
-                completion(uploaded)
-                return
-            }
-
-            let sample = samples[index]
-            let kg = sample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
-            let start = sample.startDate.timeIntervalSince1970
-            let end = sample.endDate.timeIntervalSince1970
-            latestTimestamp = max(latestTimestamp, end)
-
-            let data: [String: Any] = [
-                "type": "bodyWeight",
-                "kg": kg,
-                "start": start,
-                "end": end,
-                "source": sample.sourceRevision.source.name
-            ]
-
-            collection.addDocument(data: data) { error in
-                if let error = error {
-                    log("❌ Upload error \(index + 1): \(error.localizedDescription)")
-                } else {
-                    uploaded += 1
-                    log("✅ Uploaded weight sample \(index + 1) / \(total)")
-                }
-
-                progress(uploaded, total)
-
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.005) {
-                    uploadNext(index: index + 1)
-                }
+            } else {
+                latestPerDay[dateKey] = sample
             }
         }
 
-        uploadNext(index: 0)
+        let total = latestPerDay.count
+        var uploaded = 0
+        let group = DispatchGroup()
+        var latestDate: Date?
+
+        for (dateKey, sample) in latestPerDay {
+            if manager?.isCancelled == true { break }
+
+            let weightKg = sample.quantity.doubleValue(for: unit)
+            let roundedKg = round(weightKg * 10) / 10.0
+            let date = calendar.startOfDay(for: sample.startDate)
+            latestDate = max(latestDate ?? date, date)
+
+            let data: [String: Any] = [
+                "date": Timestamp(date: date),
+                "kg": roundedKg,
+                "type": typeIdentifier
+            ]
+
+            group.enter()
+            db.collection("patients")
+                .document(userId)
+                .collection("healthData")
+                .document("bodyWeight")
+                .collection("daily")
+                .document(dateKey)
+                .setData(data) { error in
+                    if let error = error {
+                        log("❌ Upload error for \(dateKey): \(error.localizedDescription)")
+                    } else {
+                        uploaded += 1
+                        log("✅ Uploaded weight for \(dateKey): \(roundedKg) kg")
+                        progress(uploaded, total)
+                    }
+                    group.leave()
+                }
+        }
+
+        group.notify(queue: .main) {
+            if let latest = latestDate {
+                manager?.updateLastUploadDate(latest, userId: userId, for: typeIdentifier)
+            }
+            completion(uploaded)
+        }
     }
 }
-

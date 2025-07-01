@@ -56,12 +56,14 @@ struct DataTransferView: View {
                     .multilineTextAlignment(.center)
             }
 
-            if isUploading {
+            if isUploading || !uploadLogs.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
-                    ProgressView(value: uploadProgress)
-                    Text(progressText)
-                        .font(.caption)
-                        .foregroundColor(.gray)
+                    if isUploading {
+                        ProgressView(value: uploadProgress)
+                        Text(progressText)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
 
                     ScrollView {
                         VStack(alignment: .leading, spacing: 4) {
@@ -78,16 +80,18 @@ struct DataTransferView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
 
-                    // 🔴 Cancel Upload Button
-                    Button("Cancel Upload") {
-                        HealthDataManager.shared.isCancelled = true
-                        uploadLogs.append("⛔ Upload cancelled.")
+                    if isUploading {
+                        Button("Cancel Upload") {
+                            HealthDataManager.shared.isCancelled = true
+                            uploadLogs.append("⛔ Upload cancelled.")
+                        }
+                        .foregroundColor(.red)
+                        .padding(.top, 4)
                     }
-                    .foregroundColor(.red)
-                    .padding(.top, 4)
                 }
                 .padding(.top, 12)
             }
+
 
             Spacer()
 
@@ -150,7 +154,6 @@ struct DataTransferView: View {
         .padding()
         .navigationTitle("Transfer")
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color.white)
         .onAppear {
             print("🩺 PatientStore contents: \(patientStore.patient)")
         }

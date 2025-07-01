@@ -5,6 +5,7 @@
 //  Created by Wolfgang Kleinhaentz on 30/06/2025.
 //
 
+
 import SwiftUI
 
 struct PatientSetupView: View {
@@ -25,14 +26,20 @@ struct PatientSetupView: View {
                 }
 
                 Section {
-                    Button("Save") {
+                    Button(action: {
                         let patient = PatientModel(firstName: firstName, lastName: lastName, birthDate: birthDate)
                         print("✅ Saving to patientStore: \(patient)")
-                        patientStore.patient = patient // 🔴 This updates AND saves it
+                        patientStore.patient = patient
                         dismiss()
+                    }) {
+                        Text("Save")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.red)
+                            .cornerRadius(12)
                     }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .foregroundColor(.red)
+                    .listRowBackground(Color.clear) // avoids row styling conflicts
                 }
             }
             .navigationTitle("Patient Setup")
@@ -48,4 +55,3 @@ struct PatientSetupView: View {
         }
     }
 }
-

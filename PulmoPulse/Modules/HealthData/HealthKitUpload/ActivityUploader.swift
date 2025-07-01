@@ -18,27 +18,42 @@ struct ActivityUploader: HealthDataUploader {
 
     var typeIdentifier: String { "activity" }
 
-    func fetchSamples(since startDate: Date, log: @escaping (String) -> Void, completion: @escaping ([HKQuantitySample]) -> Void) {
+    func fetchSamples(
+        since _: Date,  // Handled via manager
+        log: @escaping (String) -> Void,
+        completion: @escaping ([HKQuantitySample]) -> Void
+    ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned) else {
-            log("❌ Active Energy Burned type unavailable.")
+            log("❌ Could not get active energy type.")
             completion([])
             return
         }
 
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [])
-        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
+        let calendar = Calendar.current
+        let fallbackStart = calendar.date(byAdding: .day, value: -7, to: Date())!
+        let startDate = calendar.startOfDay(for: manager?.getOverrideStartDate() ?? fallbackStart)
+        let endDate = Date()
 
-        let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sort]) { _, results, error in
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
+
+        let query = HKSampleQuery(
+            sampleType: type,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [sortDescriptor]
+        ) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Activity fetch error: \(error?.localizedDescription ?? "unknown")")
+                log("❌ Failed to fetch active energy samples: \(error?.localizedDescription ?? "Unknown error")")
                 completion([])
                 return
             }
 
-            log("✅ Fetched \(samples.count) activity samples.")
+            log("📦 Fetched \(samples.count) active energy samples.")
             completion(samples)
         }
 
+        log("🔥 Querying raw active energy samples from \(startDate.formatted(date: .abbreviated, time: .omitted))…")
         healthStore.execute(query)
     }
 
@@ -49,64 +64,63 @@ struct ActivityUploader: HealthDataUploader {
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        let collection = db
-            .collection("patients")
-            .document(userId)
-            .collection("healthData")
-            .document("activity")
-            .collection("samples")
+        let calendar = Calendar.current
+        let kcalUnit = HKUnit.kilocalorie()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
-        let total = samples.count
-        var uploaded = 0
-        var latestTimestamp: TimeInterval = 0
+        var grouped: [String: [Double]] = [:]
 
-        func uploadNext(index: Int) {
-            if index >= total {
-                if uploaded > 0 && !(manager?.isCancelled ?? false) {
-                    let lastDate = Date(timeIntervalSince1970: latestTimestamp)
-                    manager?.updateLastUploadDate(lastDate, userId: userId, for: typeIdentifier)
-                }
-                completion(uploaded)
-                return
-            }
-
-            if manager?.isCancelled == true {
-                log("⏹️ Upload cancelled by user after \(uploaded) samples.")
-                completion(uploaded)
-                return
-            }
-
-            let sample = samples[index]
-            let kcal = sample.quantity.doubleValue(for: HKUnit.kilocalorie())
-            let start = sample.startDate.timeIntervalSince1970
-            let end = sample.endDate.timeIntervalSince1970
-            latestTimestamp = max(latestTimestamp, end)
-
-            let data: [String: Any] = [
-                "type": "activity",
-                "kcal": kcal,
-                "start": start,
-                "end": end,
-                "source": sample.sourceRevision.source.name
-            ]
-
-            collection.addDocument(data: data) { error in
-                if let error = error {
-                    log("❌ Upload error \(index + 1): \(error.localizedDescription)")
-                } else {
-                    uploaded += 1
-                    log("✅ Uploaded activity sample \(index + 1) / \(total)")
-                }
-
-                progress(uploaded, total)
-
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.005) {
-                    uploadNext(index: index + 1)
-                }
-            }
+        for sample in samples {
+            if manager?.isCancelled == true { break }
+            let value = sample.quantity.doubleValue(for: kcalUnit)
+            let dateKey = formatter.string(from: sample.startDate)
+            grouped[dateKey, default: []].append(value)
         }
 
-        uploadNext(index: 0)
+        var uploaded = 0
+        let group = DispatchGroup()
+        var latestDate: Date?
+
+        for (dateKey, values) in grouped {
+            guard !values.isEmpty else { continue }
+
+            let total = values.reduce(0, +)
+            let roundedTotal = Int(total)  // ⬅️ Round down to full kcal
+
+            let date = formatter.date(from: dateKey) ?? Date()
+            latestDate = max(latestDate ?? date, date)
+
+            let data: [String: Any] = [
+                "date": Timestamp(date: date),
+                "kcal": roundedTotal,
+                "type": typeIdentifier
+            ]
+
+            group.enter()
+            db.collection("patients")
+                .document(userId)
+                .collection("healthData")
+                .document("activity")
+                .collection("daily")
+                .document(dateKey)
+                .setData(data) { error in
+                    if let error = error {
+                        log("❌ Failed to upload activity for \(dateKey): \(error.localizedDescription)")
+                    } else {
+                        uploaded += 1
+                        log("✅ Uploaded activity for \(dateKey): \(roundedTotal) kcal")
+                        progress(uploaded, grouped.count)
+                    }
+                    group.leave()
+                }
+        }
+
+        group.notify(queue: .main) {
+            if let latest = latestDate {
+                manager?.updateLastUploadDate(latest, userId: userId, for: typeIdentifier)
+            }
+            completion(uploaded)
+        }
     }
 }
-

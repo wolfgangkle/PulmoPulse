@@ -11,34 +11,40 @@ import FirebaseFirestore
 
 struct HeartRateUploader: HealthDataUploader {
     var dataTypes: [HKObjectType]
-    
+
     let healthStore: HKHealthStore
     let db: Firestore
     weak var manager: HealthDataManager?
 
     var typeIdentifier: String { "heartRate" }
 
-    func fetchSamples(since startDate: Date, log: @escaping (String) -> Void, completion: @escaping ([HKQuantitySample]) -> Void) {
+    func fetchSamples(
+        since _: Date,  // Not used anymore
+        log: @escaping (String) -> Void,
+        completion: @escaping ([HKQuantitySample]) -> Void
+    ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .heartRate) else {
             log("❌ HeartRate type unavailable.")
             completion([])
             return
         }
 
+        let startDate = Calendar.current.startOfDay(for: manager?.getOverrideStartDate() ?? Date(timeIntervalSinceNow: -7 * 86400))
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [])
-        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
+        let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
 
         let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sort]) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ HeartRate fetch error: \(error?.localizedDescription ?? "unknown")")
+                log("❌ Failed to fetch heartRate samples: \(error?.localizedDescription ?? "Unknown error")")
                 completion([])
                 return
             }
 
-            log("✅ Fetched \(samples.count) heart rate samples.")
+            log("📊 Fetched \(samples.count) heartRate samples.")
             completion(samples)
         }
 
+        log("💓 Querying raw heart rate samples since \(startDate.formatted())…")
         healthStore.execute(query)
     }
 
@@ -49,69 +55,72 @@ struct HeartRateUploader: HealthDataUploader {
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        let collection = db
-            .collection("patients")
-            .document(userId)
-            .collection("healthData")
-            .document("heartRate")
-            .collection("samples")
+        let bpmUnit = HKUnit(from: "count/min")
+        let calendar = Calendar.current
 
-        let total = samples.count
-        var uploaded = 0
-        var latestTimestamp: TimeInterval = 0
+        var grouped: [String: [Double]] = [:]
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
-        func uploadNext(index: Int) {
-            // Completion condition
-            if index >= total {
-                if uploaded > 0 && !(manager?.isCancelled ?? false) {
-                    let lastDate = Date(timeIntervalSince1970: latestTimestamp)
-                    manager?.updateLastUploadDate(lastDate, userId: userId, for: typeIdentifier)
-
-                }
-                completion(uploaded)
-                return
-            }
-
-            // Cancellation check
-            if manager?.isCancelled == true {
-                log("⏹️ Upload cancelled by user after \(uploaded) samples.")
-                completion(uploaded)
-                return
-            }
-
-            let sample = samples[index]
-            let bpm = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-            let start = sample.startDate.timeIntervalSince1970
-            let end = sample.endDate.timeIntervalSince1970
-            latestTimestamp = max(latestTimestamp, end)
-
-            let data: [String: Any] = [
-                "type": "heartRate",
-                "bpm": bpm,
-                "start": start,
-                "end": end,
-                "source": sample.sourceRevision.source.name
-            ]
-
-            collection.addDocument(data: data) { error in
-                if let error = error {
-                    log("❌ Upload error \(index + 1): \(error.localizedDescription)")
-                } else {
-                    uploaded += 1
-                    log("✅ Uploaded sample \(index + 1) / \(total)")
-                }
-
-                progress(uploaded, total)
-
-                // Schedule next iteration with tiny delay
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.005) {
-                    uploadNext(index: index + 1)
-                }
-            }
+        for sample in samples {
+            if manager?.isCancelled == true { break }
+            let value = sample.quantity.doubleValue(for: bpmUnit)
+            let dateKey = formatter.string(from: sample.startDate)
+            grouped[dateKey, default: []].append(value)
         }
 
-        // Start serial loop
-        uploadNext(index: 0)
+        var uploaded = 0
+        let group = DispatchGroup()
+        var latestDate: Date?
+
+        for (dateKey, values) in grouped {
+            guard !values.isEmpty else { continue }
+
+            let minValue = values.min() ?? 0
+            let maxValue = values.max() ?? 0
+            let avg = values.reduce(0, +) / Double(values.count)
+
+            let roundedMin = round(minValue * 10) / 10.0
+            let roundedMax = round(maxValue * 10) / 10.0
+            let roundedAvg = round(avg * 10) / 10.0
+
+
+            let date = formatter.date(from: dateKey) ?? Date()
+            latestDate = max(latestDate ?? date, date)
+
+
+            let data: [String: Any] = [
+                "date": Timestamp(date: date),
+                "bpmAvg": roundedAvg,
+                "bpmMin": roundedMin,
+                "bpmMax": roundedMax,
+                "type": typeIdentifier
+            ]
+
+            group.enter()
+            db.collection("patients")
+                .document(userId)
+                .collection("healthData")
+                .document("heartRate")
+                .collection("daily")
+                .document(dateKey)
+                .setData(data) { error in
+                    if let error = error {
+                        log("❌ Failed to upload heart rate for \(dateKey): \(error.localizedDescription)")
+                    } else {
+                        uploaded += 1
+                        log("✅ Uploaded daily heart rate for \(dateKey)")
+                        progress(uploaded, grouped.count)
+                    }
+                    group.leave()
+                }
+        }
+
+        group.notify(queue: .main) {
+            if let latest = latestDate {
+                manager?.updateLastUploadDate(latest, userId: userId, for: typeIdentifier)
+            }
+            completion(uploaded)
+        }
     }
 }
-

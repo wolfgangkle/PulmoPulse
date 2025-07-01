@@ -5,6 +5,7 @@
 //  Created by Wolfgang Kleinhaentz on 30/06/2025.
 //
 
+
 import SwiftUI
 
 struct QuestionnaireListView: View {
@@ -30,16 +31,13 @@ struct QuestionnaireListView: View {
                             }
                             .padding(.vertical, 4)
                         }
-                        .listRowBackground(Color.white)
                     }
                     .onDelete(perform: deleteEntry)
                 }
                 .listStyle(.plain)
-                .background(Color.white)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
     }
 
     private func deleteEntry(at offsets: IndexSet) {
@@ -51,4 +49,5 @@ struct QuestionnaireListView: View {
         }
     }
 }
+
 

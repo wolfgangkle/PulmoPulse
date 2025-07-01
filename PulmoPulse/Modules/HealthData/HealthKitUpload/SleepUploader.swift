@@ -1,112 +1,140 @@
 //
-//  StepsUploader.swift
+//  SleepUploader.swift
 //  PulmoPulse
 //
 //  Created by Wolfgang Kleinhaentz on 01/07/2025.
 //
 
+
 import Foundation
 import HealthKit
 import FirebaseFirestore
 
-struct StepsUploader: HealthDataUploader {
+struct SleepUploader: HealthDataUploader {
     var dataTypes: [HKObjectType]
-    
+
     let healthStore: HKHealthStore
     let db: Firestore
     weak var manager: HealthDataManager?
 
-    var typeIdentifier: String { "steps" }
+    var typeIdentifier: String { "sleep" }
 
-    func fetchSamples(since startDate: Date, log: @escaping (String) -> Void, completion: @escaping ([HKQuantitySample]) -> Void) {
-        guard let type = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
-            log("❌ Step Count type unavailable.")
-            completion([])
-            return
-        }
-
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [])
-        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
-
-        let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sort]) { _, results, error in
-            guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Step Count fetch error: \(error?.localizedDescription ?? "unknown")")
-                completion([])
-                return
-            }
-
-            log("✅ Fetched \(samples.count) step count samples.")
-            completion(samples)
-        }
-
-        healthStore.execute(query)
+    func fetchSamples(
+        since _: Date,
+        log: @escaping (String) -> Void,
+        completion: @escaping ([HKQuantitySample]) -> Void
+    ) {
+        // Not used (we work directly with CategorySamples)
+        completion([])
     }
 
     func uploadSamples(
-        _ samples: [HKQuantitySample],
+        _ _: [HKQuantitySample], // Ignored
         userId: String,
         progress: @escaping (Int, Int) -> Void,
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        let collection = db
-            .collection("patients")
-            .document(userId)
-            .collection("healthData")
-            .document("steps")
-            .collection("samples")
+        guard let type = HKCategoryType.categoryType(forIdentifier: .sleepAnalysis) else {
+            log("❌ Sleep type unavailable.")
+            completion(0)
+            return
+        }
 
-        let total = samples.count
-        var uploaded = 0
-        var latestTimestamp: TimeInterval = 0
+        let calendar = Calendar.current
+        let fallbackStart = calendar.date(byAdding: .day, value: -5, to: Date())!
+        let startDate = calendar.startOfDay(for: manager?.getOverrideStartDate() ?? fallbackStart)
+        let endDate = Date()
 
-        func uploadNext(index: Int) {
-            if index >= total {
-                if uploaded > 0 && !(manager?.isCancelled ?? false) {
-                    let lastDate = Date(timeIntervalSince1970: latestTimestamp)
-                    manager?.updateLastUploadDate(lastDate, userId: userId, for: typeIdentifier)
-                }
-                completion(uploaded)
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
+
+        let query = HKSampleQuery(
+            sampleType: type,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [sort]
+        ) { _, results, error in
+            guard let samples = results as? [HKCategorySample], error == nil else {
+                log("❌ Sleep fetch error: \(error?.localizedDescription ?? "unknown")")
+                completion(0)
                 return
             }
 
-            if manager?.isCancelled == true {
-                log("⏹️ Upload cancelled by user after \(uploaded) samples.")
-                completion(uploaded)
-                return
+            log("😴 Fetched \(samples.count) raw sleep samples. Grouping by day…")
+
+            var sleepByDay: [String: (asleep: TimeInterval, inBed: TimeInterval, sessions: Int)] = [:]
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+
+            for sample in samples {
+                if manager?.isCancelled == true { break }
+
+                let start = sample.startDate
+                let end = sample.endDate
+                let duration = end.timeIntervalSince(start)
+                let dayKey = formatter.string(from: calendar.startOfDay(for: start))
+
+                var entry = sleepByDay[dayKey] ?? (asleep: 0, inBed: 0, sessions: 0)
+
+                if sample.value == HKCategoryValueSleepAnalysis.inBed.rawValue {
+                    entry.inBed += duration
+                } else if sample.value == HKCategoryValueSleepAnalysis.asleepUnspecified.rawValue ||
+                          sample.value == HKCategoryValueSleepAnalysis.asleepCore.rawValue ||
+                          sample.value == HKCategoryValueSleepAnalysis.asleepDeep.rawValue ||
+                          sample.value == HKCategoryValueSleepAnalysis.asleepREM.rawValue {
+                    entry.asleep += duration
+                }
+
+                entry.sessions += 1
+                sleepByDay[dayKey] = entry
             }
 
-            let sample = samples[index]
-            let steps = sample.quantity.doubleValue(for: HKUnit.count())
-            let start = sample.startDate.timeIntervalSince1970
-            let end = sample.endDate.timeIntervalSince1970
-            latestTimestamp = max(latestTimestamp, end)
+            let total = sleepByDay.count
+            var uploaded = 0
+            var latestDate: Date?
+            let group = DispatchGroup()
 
-            let data: [String: Any] = [
-                "type": "steps",
-                "count": steps,
-                "start": start,
-                "end": end,
-                "source": sample.sourceRevision.source.name
-            ]
+            for (dayKey, entry) in sleepByDay {
+                let date = formatter.date(from: dayKey) ?? Date()
+                latestDate = max(latestDate ?? date, date)
 
-            collection.addDocument(data: data) { error in
-                if let error = error {
-                    log("❌ Upload error \(index + 1): \(error.localizedDescription)")
-                } else {
-                    uploaded += 1
-                    log("✅ Uploaded step sample \(index + 1) / \(total)")
+                let data: [String: Any] = [
+                    "date": Timestamp(date: date),
+                    "type": typeIdentifier,
+                    "asleepMinutes": Int(entry.asleep / 60),
+                    "inBedMinutes": Int(entry.inBed / 60),
+                    "sleepSessions": entry.sessions
+                ]
+
+                group.enter()
+                db.collection("patients")
+                    .document(userId)
+                    .collection("healthData")
+                    .document("sleep")
+                    .collection("daily")
+                    .document(dayKey)
+                    .setData(data) { error in
+                        if let error = error {
+                            log("❌ Upload error for \(dayKey): \(error.localizedDescription)")
+                        } else {
+                            uploaded += 1
+                            log("✅ Uploaded sleep summary for \(dayKey)")
+                            progress(uploaded, total)
+                        }
+                        group.leave()
+                    }
+            }
+
+            group.notify(queue: .main) {
+                if let latest = latestDate {
+                    manager?.updateLastUploadDate(latest, userId: userId, for: typeIdentifier)
                 }
-
-                progress(uploaded, total)
-
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.005) {
-                    uploadNext(index: index + 1)
-                }
+                completion(uploaded)
             }
         }
 
-        uploadNext(index: 0)
+        log("🛌 Querying raw sleep samples since \(startDate.formatted())…")
+        healthStore.execute(query)
     }
 }
-

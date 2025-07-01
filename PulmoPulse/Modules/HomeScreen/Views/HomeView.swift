@@ -11,6 +11,7 @@ struct HomeView: View {
     @EnvironmentObject var patientStore: PatientStore
     @State private var showingAddSheet = false
     @State private var showingDataTransferSheet = false
+    @State private var showingSettings = false
 
     var body: some View {
         NavigationStack {
@@ -22,27 +23,35 @@ struct HomeView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button(action: {
+                        showingSettings = true
+                    }) {
+                        Image(systemName: "gearshape")
+                    }
+
+                    Button(action: {
                         showingDataTransferSheet = true
                     }) {
                         Image(systemName: "arrow.up.doc")
-                            .foregroundColor(.red)
                     }
 
                     Button(action: {
                         showingAddSheet = true
                     }) {
                         Image(systemName: "plus")
-                            .foregroundColor(.red)
                     }
                 }
             }
         }
-        .tint(.red)
+        .tint(.red) // ✅ this now handles icon colors globally
         .sheet(isPresented: $showingAddSheet) {
             AddQuestionnaireView()
         }
         .sheet(isPresented: $showingDataTransferSheet) {
             DataTransferView()
+                .environmentObject(patientStore)
+        }
+        .sheet(isPresented: $showingSettings) {
+            SettingsView()
                 .environmentObject(patientStore)
         }
     }

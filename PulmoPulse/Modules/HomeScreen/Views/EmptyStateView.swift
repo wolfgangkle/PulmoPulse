@@ -21,11 +21,11 @@ struct EmptyStateView: View {
 
                 Text("No Questionnaires Yet")
                     .font(.title2)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.red)
 
                 Text("Tap the + button to create your first entry.")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.red)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
             }
@@ -33,7 +33,6 @@ struct EmptyStateView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
     }
 }
 

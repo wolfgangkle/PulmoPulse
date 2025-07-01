@@ -5,14 +5,14 @@
 //  Created by Wolfgang Kleinhaentz on 01/07/2025.
 //
 
+
 import Foundation
 import HealthKit
 import FirebaseFirestore
-import FirebaseAuth
 
 class OxygenSaturationUploader: HealthDataUploader {
-    let typeIdentifier: String = "oxygenSaturation"
-    let typeName: String = "oxygenSaturation"
+    let typeIdentifier = "oxygenSaturation"
+    let typeName = "oxygenSaturation"
     let dataTypes: [HKObjectType]
 
     let healthStore: HKHealthStore
@@ -27,29 +27,41 @@ class OxygenSaturationUploader: HealthDataUploader {
     }
 
     func fetchSamples(
-        since startDate: Date,
+        since _: Date,
         log: @escaping (String) -> Void,
         completion: @escaping ([HKQuantitySample]) -> Void
     ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .oxygenSaturation) else {
-            log("❌ Could not create HKQuantityType for oxygen saturation")
+            log("❌ Could not get oxygenSaturation type")
             completion([])
             return
         }
 
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [])
-        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
+        let calendar = Calendar.current
+        let fallback = calendar.date(byAdding: .day, value: -7, to: Date())!
+        let startDate = calendar.startOfDay(for: manager?.getOverrideStartDate() ?? fallback)
+        let endDate = Date()
 
-        let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sort]) { _, results, error in
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+        let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
+
+        let query = HKSampleQuery(
+            sampleType: type,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [sort]
+        ) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Oxygen saturation fetch error: \(error?.localizedDescription ?? "Unknown")")
+                log("❌ Failed to fetch oxygen saturation samples: \(error?.localizedDescription ?? "Unknown error")")
                 completion([])
                 return
             }
-            log("✅ Fetched \(samples.count) oxygen saturation samples.")
+
+            log("🫁 Fetched \(samples.count) oxygen saturation samples.")
             completion(samples)
         }
 
+        log("🫁 Querying raw oxygen saturation samples…")
         healthStore.execute(query)
     }
 
@@ -60,66 +72,72 @@ class OxygenSaturationUploader: HealthDataUploader {
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        let collection = db
-            .collection("patients")
-            .document(userId)
-            .collection("healthData")
-            .document(typeName)
-            .collection("samples")
+        let calendar = Calendar.current
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
-        var uploaded = 0
-        let total = samples.count
-        var latestTimestamp: TimeInterval = 0
+        var grouped: [String: [Double]] = [:]
 
-        func uploadNext(index: Int) {
-            if index >= total {
-                if uploaded > 0 && !(manager?.isCancelled ?? false) {
-                    let lastDate = Date(timeIntervalSince1970: latestTimestamp)
-                    manager?.updateLastUploadDate(lastDate, userId: userId, for: typeIdentifier)
+        for sample in samples {
+            if manager?.isCancelled == true { break }
 
-                }
-                completion(uploaded)
-                return
-            }
-
-            if manager?.isCancelled == true {
-                log("⏹️ Upload cancelled after \(uploaded) samples.")
-                completion(uploaded)
-                return
-            }
-
-            let sample = samples[index]
-            let saturation = sample.quantity.doubleValue(for: .percent()) * 100.0
-            let start = sample.startDate.timeIntervalSince1970
-            let end = sample.endDate.timeIntervalSince1970
-            latestTimestamp = max(latestTimestamp, end)
-
-            let data: [String: Any] = [
-                "type": typeName,
-                "oxygenPercentage": saturation,
-                "start": start,
-                "end": end,
-                "source": sample.sourceRevision.source.name
-            ]
-
-            collection.addDocument(data: data) { error in
-                if error == nil {
-                    uploaded += 1
-                    log("✅ Uploaded sample \(index + 1) / \(total)")
-                } else {
-                    log("❌ Sample \(index + 1) failed: \(error?.localizedDescription ?? "unknown error")")
-                }
-
-                progress(uploaded, total)
-
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.005) {
-                    uploadNext(index: index + 1)
-                }
-            }
+            let value = sample.quantity.doubleValue(for: .percent()) * 100.0  // Convert to %
+            let dateKey = formatter.string(from: sample.startDate)
+            grouped[dateKey, default: []].append(value)
         }
 
-        uploadNext(index: 0)
+        let total = grouped.count
+        var uploaded = 0
+        let group = DispatchGroup()
+        var latestDate: Date?
+
+        for (dateKey, values) in grouped {
+            guard !values.isEmpty else { continue }
+
+            let avgValue = values.reduce(0, +) / Double(values.count)
+            let minValue = values.min() ?? avgValue
+            let maxValue = values.max() ?? avgValue
+
+            let roundedAvg = Int(round(avgValue))
+            let roundedMin = Int(round(minValue))
+            let roundedMax = Int(round(maxValue))
+
+
+            let date = formatter.date(from: dateKey) ?? Date()
+            latestDate = max(latestDate ?? date, date)
+
+            let data: [String: Any] = [
+                "date": Timestamp(date: date),
+                "type": typeIdentifier,
+                "avgSpO2": roundedAvg,
+                "minSpO2": roundedMin,
+                "maxSpO2": roundedMax
+            ]
+
+            group.enter()
+            db.collection("patients")
+                .document(userId)
+                .collection("healthData")
+                .document(typeIdentifier)
+                .collection("daily")
+                .document(dateKey)
+                .setData(data) { error in
+                    if let error = error {
+                        log("❌ Upload error for \(dateKey): \(error.localizedDescription)")
+                    } else {
+                        uploaded += 1
+                        log("✅ Uploaded oxygen saturation for \(dateKey): avg \(roundedAvg)%")
+                        progress(uploaded, total)
+                    }
+                    group.leave()
+                }
+        }
+
+        group.notify(queue: .main) {
+            if let latest = latestDate {
+                self.manager?.updateLastUploadDate(latest, userId: userId, for: self.typeIdentifier)
+            }
+            completion(uploaded)
+        }
     }
-
 }
-
