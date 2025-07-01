@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseAuth
 
 @main
 struct PulmoPulseApp: App {
@@ -15,27 +16,6 @@ struct PulmoPulseApp: App {
     @StateObject private var questionnaireStore = QuestionnaireStore()
     @StateObject private var patientStore = PatientStore()
     @State private var showPatientSetup = false
-
-    init() {
-        // UINavigationBar styling
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.red]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.red]
-
-        let proxy = UINavigationBar.appearance()
-        proxy.standardAppearance = appearance
-        proxy.scrollEdgeAppearance = appearance
-        proxy.compactAppearance = appearance
-        proxy.compactScrollEdgeAppearance = appearance
-        proxy.tintColor = .red
-
-        // 🔴 Request HealthKit authorization at launch
-        HealthDataManager.shared.requestAuthorization { granted in
-            print(granted ? "✅ HealthKit access granted" : "❌ HealthKit access denied")
-        }
-    }
 
     var body: some Scene {
         WindowGroup {
@@ -51,10 +31,28 @@ struct PulmoPulseApp: App {
                         .environmentObject(patientStore)
                 }
                 .onAppear {
+                    // ✅ Safe to call AFTER FirebaseApp.configure()
+                    if Auth.auth().currentUser == nil {
+                        Auth.auth().signInAnonymously { result, error in
+                            if let error = error {
+                                print("❌ Firebase anonymous sign-in failed:", error.localizedDescription)
+                            } else if let user = result?.user {
+                                print("✅ Firebase signed in anonymously. UID:", user.uid)
+                            }
+                        }
+                    } else {
+                        print("✅ Already signed in. UID:", Auth.auth().currentUser?.uid ?? "unknown")
+                    }
+
+                    // 🔐 Request HealthKit access on first launch
+                    HealthDataManager.shared.requestAuthorization { granted in
+                        print(granted ? "✅ HealthKit access granted" : "❌ HealthKit access denied")
+                    }
+
                     // Show PatientSetupView if no valid patient data
                     if patientStore.patient.firstName.isEmpty ||
-                       patientStore.patient.lastName.isEmpty ||
-                       patientStore.patient.birthDate == nil {
+                        patientStore.patient.lastName.isEmpty ||
+                        patientStore.patient.birthDate == nil {
                         showPatientSetup = true
                     }
                 }
