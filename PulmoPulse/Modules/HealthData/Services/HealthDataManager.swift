@@ -31,8 +31,39 @@ class HealthDataManager: ObservableObject {
             healthStore: healthStore,
             db: db,
             manager: self
+        ),
+        StepsUploader(
+            dataTypes: [HKObjectType.quantityType(forIdentifier: .stepCount)!],
+            healthStore: healthStore,
+            db: db,
+            manager: self
+        ),
+        SleepUploader(
+            dataTypes: [HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!],
+            healthStore: healthStore,
+            db: db,
+            manager: self
+        ),
+        ActivityUploader(
+            dataTypes: [HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!],
+            healthStore: healthStore,
+            db: db,
+            manager: self
+        ),
+        RespiratoryRateUploader(
+            dataTypes: [HKObjectType.quantityType(forIdentifier: .respiratoryRate)!],
+            healthStore: healthStore,
+            db: db,
+            manager: self
+        ),
+        BodyWeightUploader(
+            dataTypes: [HKObjectType.quantityType(forIdentifier: .bodyMass)!],
+            healthStore: healthStore,
+            db: db,
+            manager: self
         )
     ]
+
 
     func requestAuthorization(completion: @escaping (Bool) -> Void) {
         let typesToRead = Set(uploaders.flatMap { $0.dataTypes })
