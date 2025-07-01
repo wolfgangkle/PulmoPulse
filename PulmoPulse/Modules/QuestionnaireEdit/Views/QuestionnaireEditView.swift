@@ -41,13 +41,6 @@ struct QuestionnaireEditView: View {
             .listStyle(.plain)
             .navigationTitle("Edit Questionnaire")
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Back") {
-                        dismiss()
-                    }
-                    .foregroundColor(.red)
-                }
-
                 ToolbarItem(placement: .confirmationAction) {
                     if hasChanges {
                         Button("Save") {
@@ -58,6 +51,7 @@ struct QuestionnaireEditView: View {
                     }
                 }
             }
+
             .onAppear {
                 editedAnswers = originalEntry.answers
             }
