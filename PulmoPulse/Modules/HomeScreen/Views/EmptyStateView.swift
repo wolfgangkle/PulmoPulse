@@ -19,11 +19,11 @@ struct EmptyStateView: View {
                     .frame(width: 80, height: 80)
                     .foregroundColor(.gray)
 
-                Text("No Questionnaires Yet")
+                Text("no_questionnaires_title".localized)
                     .font(.title2)
                     .foregroundColor(.red)
 
-                Text("Tap the + button to create your first entry.")
+                Text("no_questionnaires_subtitle".localized)
                     .font(.subheadline)
                     .foregroundColor(.red)
                     .multilineTextAlignment(.center)

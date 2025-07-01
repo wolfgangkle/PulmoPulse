@@ -6,6 +6,7 @@
 //  Created by Wolfgang Kleinhaentz on 30/06/2025.
 //
 
+
 import SwiftUI
 
 struct AddQuestionnaireView: View {
@@ -25,7 +26,7 @@ struct AddQuestionnaireView: View {
                             .font(.headline)
 
                         if case .rating1to5 = question.type {
-                            Text("(1 = very bad, 5 = very good)")
+                            Text("rating_scale_hint".localized)
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
@@ -33,21 +34,20 @@ struct AddQuestionnaireView: View {
                         answerButtons(for: question)
                     }
                     .padding(.vertical, 8)
-
                 }
             }
             .listStyle(.plain)
-            .navigationTitle("New Questionnaire")
+            .navigationTitle("new_questionnaire_title".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button("cancel_button".localized) {
                         dismiss()
                     }
                     .foregroundColor(.red)
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button("save_button".localized) {
                         saveQuestionnaire()
                         dismiss()
                     }
@@ -64,7 +64,7 @@ struct AddQuestionnaireView: View {
 
         switch question.type {
         case .yesNo:
-            buttonRow(options: ["Yes", "No"], selected: selected) { choice in
+            buttonRow(options: ["yes".localized, "no".localized], selected: selected) { choice in
                 answers[question.id] = choice
             }
 
@@ -74,12 +74,12 @@ struct AddQuestionnaireView: View {
             }
 
         case .multipleChoice(let options):
-            buttonRow(options: options, selected: selected) { choice in
+            buttonRow(options: options.map { $0.localized }, selected: selected) { choice in
                 answers[question.id] = choice
             }
 
         case .multiSelect(let options):
-            multiSelectRow(questionId: question.id, options: options)
+            multiSelectRow(questionId: question.id, options: options.map { $0.localized })
         }
     }
 

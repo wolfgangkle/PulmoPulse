@@ -1,0 +1,168 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "activity_fetch_failed" : {
+
+    },
+    "activity_fetched" : {
+
+    },
+    "activity_querying_from" : {
+
+    },
+    "activity_type_missing" : {
+
+    },
+    "activity_upload_failed" : {
+
+    },
+    "activity_uploaded" : {
+
+    },
+    "all_uploaders_finished" : {
+
+    },
+    "body_weight_fetch_failed" : {
+
+    },
+    "body_weight_fetched" : {
+
+    },
+    "body_weight_querying" : {
+
+    },
+    "body_weight_type_missing" : {
+
+    },
+    "body_weight_upload_failed" : {
+
+    },
+    "body_weight_uploaded" : {
+
+    },
+    "heart_rate_fetch_failed" : {
+
+    },
+    "heart_rate_fetched" : {
+
+    },
+    "heart_rate_querying" : {
+
+    },
+    "heart_rate_type_missing" : {
+
+    },
+    "heart_rate_upload_failed" : {
+
+    },
+    "heart_rate_uploaded" : {
+
+    },
+    "last_upload_update_failed" : {
+
+    },
+    "last_upload_updated" : {
+
+    },
+    "metadata_upload_failed" : {
+
+    },
+    "metadata_uploaded" : {
+
+    },
+    "no_samples_found" : {
+
+    },
+    "no_user_abort_upload" : {
+
+    },
+    "no_user_skip_metadata" : {
+
+    },
+    "oxygen_fetch_failed" : {
+
+    },
+    "oxygen_querying" : {
+
+    },
+    "oxygen_samples_fetched" : {
+
+    },
+    "oxygen_type_unavailable" : {
+
+    },
+    "oxygen_upload_failed" : {
+
+    },
+    "oxygen_uploaded" : {
+
+    },
+    "respiratory_fetch_failed" : {
+
+    },
+    "respiratory_querying" : {
+
+    },
+    "respiratory_samples_fetched" : {
+
+    },
+    "respiratory_type_unavailable" : {
+
+    },
+    "respiratory_upload_failed" : {
+
+    },
+    "respiratory_uploaded" : {
+
+    },
+    "samples_fetched" : {
+
+    },
+    "sleep_fetch_error" : {
+
+    },
+    "sleep_querying" : {
+
+    },
+    "sleep_samples_fetched" : {
+
+    },
+    "sleep_type_unavailable" : {
+
+    },
+    "sleep_upload_error" : {
+
+    },
+    "sleep_uploaded" : {
+
+    },
+    "steps_fetch_error" : {
+
+    },
+    "steps_querying" : {
+
+    },
+    "steps_samples_fetched" : {
+
+    },
+    "steps_type_unavailable" : {
+
+    },
+    "steps_upload_error" : {
+
+    },
+    "steps_uploaded" : {
+
+    },
+    "upload_started" : {
+
+    },
+    "uploading_from_days" : {
+
+    },
+    "Wolfgang Kleinhaentz" : {
+
+    }
+  },
+  "version" : "1.0"
+}

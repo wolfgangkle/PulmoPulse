@@ -32,7 +32,6 @@ protocol HealthDataUploader {
 }
 
 extension HealthDataUploader {
-    // Default implementation of the full upload logic
     func uploadSince(
         startDate: Date,
         userId: String,
@@ -40,12 +39,16 @@ extension HealthDataUploader {
         logHandler: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        logHandler("📡 Starting upload for \(typeIdentifier)…")
+        let startMessage = String(format: NSLocalizedString("upload_started", comment: ""), typeIdentifier)
+        logHandler("📡 \(startMessage)")
+
         fetchSamples(since: startDate, log: logHandler) { samples in
-            logHandler("📊 \(samples.count) \(typeIdentifier) samples fetched.")
-            
+            let fetchedMessage = String(format: NSLocalizedString("samples_fetched", comment: ""), samples.count, typeIdentifier)
+            logHandler("📊 \(fetchedMessage)")
+
             if samples.isEmpty {
-                logHandler("⚠️ No \(typeIdentifier) samples to upload.")
+                let noSamplesMessage = String(format: NSLocalizedString("no_samples_found", comment: ""), typeIdentifier)
+                logHandler("⚠️ \(noSamplesMessage)")
                 completion(0)
             } else {
                 self.uploadSamples(

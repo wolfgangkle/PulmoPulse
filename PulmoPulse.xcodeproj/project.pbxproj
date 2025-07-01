@@ -358,6 +358,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -415,6 +416,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -433,7 +435,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PulmoPulse/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PulmoPulse;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "PulmoPulse uses your health data such as heart rate, oxygen saturation, sleep, and activity level to support personalized monitoring and research in cystic fibrosis patients.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "PulmoPulse writes health data to your Health app for record keeping and analysis.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -465,7 +470,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PulmoPulse/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PulmoPulse;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "PulmoPulse uses your health data such as heart rate, oxygen saturation, sleep, and activity level to support personalized monitoring and research in cystic fibrosis patients.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "PulmoPulse writes health data to your Health app for record keeping and analysis.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

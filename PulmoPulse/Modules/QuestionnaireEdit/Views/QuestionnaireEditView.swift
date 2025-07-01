@@ -27,7 +27,7 @@ struct QuestionnaireEditView: View {
                             .font(.headline)
 
                         if case .rating1to5 = question.type {
-                            Text("(1 = very bad, 5 = very good)")
+                            Text("rating_scale_hint".localized)
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
@@ -35,15 +35,14 @@ struct QuestionnaireEditView: View {
                         answerButtons(for: question)
                     }
                     .padding(.vertical, 8)
-
                 }
             }
             .listStyle(.plain)
-            .navigationTitle("Edit Questionnaire")
+            .navigationTitle("edit_questionnaire_title".localized)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     if hasChanges {
-                        Button("Save") {
+                        Button("save_button".localized) {
                             saveEdits()
                             dismiss()
                         }
@@ -51,7 +50,6 @@ struct QuestionnaireEditView: View {
                     }
                 }
             }
-
             .onAppear {
                 editedAnswers = originalEntry.answers
             }
@@ -64,7 +62,7 @@ struct QuestionnaireEditView: View {
 
         switch question.type {
         case .yesNo:
-            buttonRow(options: ["Yes", "No"], selected: selected) { choice in
+            buttonRow(options: ["yes".localized, "no".localized], selected: selected) { choice in
                 updateAnswer(id: question.id, value: choice)
             }
 
@@ -74,12 +72,12 @@ struct QuestionnaireEditView: View {
             }
 
         case .multipleChoice(let options):
-            buttonRow(options: options, selected: selected) { choice in
+            buttonRow(options: options.map { $0.localized }, selected: selected) { choice in
                 updateAnswer(id: question.id, value: choice)
             }
 
         case .multiSelect(let options):
-            multiSelectRow(questionId: question.id, options: options)
+            multiSelectRow(questionId: question.id, options: options.map { $0.localized })
         }
     }
 

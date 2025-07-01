@@ -25,7 +25,7 @@ struct RespiratoryRateUploader: HealthDataUploader {
         completion: @escaping ([HKQuantitySample]) -> Void
     ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .respiratoryRate) else {
-            log("❌ Respiratory Rate type unavailable.")
+            log("❌ " + NSLocalizedString("respiratory_type_unavailable", comment: ""))
             completion([])
             return
         }
@@ -45,16 +45,16 @@ struct RespiratoryRateUploader: HealthDataUploader {
             sortDescriptors: [sort]
         ) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Failed to fetch respiratory rate samples: \(error?.localizedDescription ?? "Unknown error")")
+                log("❌ " + String(format: NSLocalizedString("respiratory_fetch_failed", comment: ""), error?.localizedDescription ?? "Unknown error"))
                 completion([])
                 return
             }
 
-            log("🫁 Fetched \(samples.count) respiratory rate samples.")
+            log("🫁 " + String(format: NSLocalizedString("respiratory_samples_fetched", comment: ""), samples.count))
             completion(samples)
         }
 
-        log("🫁 Querying raw respiratory rate samples…")
+        log("🫁 " + NSLocalizedString("respiratory_querying", comment: ""))
         healthStore.execute(query)
     }
 
@@ -96,7 +96,6 @@ struct RespiratoryRateUploader: HealthDataUploader {
             let roundedMin = Int(round(minValue))
             let roundedMax = Int(round(maxValue))
 
-
             let date = formatter.date(from: dateKey) ?? Date()
             latestDate = max(latestDate ?? date, date)
 
@@ -117,10 +116,10 @@ struct RespiratoryRateUploader: HealthDataUploader {
                 .document(dateKey)
                 .setData(data) { error in
                     if let error = error {
-                        log("❌ Upload error for \(dateKey): \(error.localizedDescription)")
+                        log("❌ " + String(format: NSLocalizedString("respiratory_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ Uploaded respiratory rate for \(dateKey): avg \(roundedAvg) brpm")
+                        log("✅ " + String(format: NSLocalizedString("respiratory_uploaded", comment: ""), dateKey, roundedAvg))
                         progress(uploaded, total)
                     }
                     group.leave()

@@ -54,7 +54,6 @@ class DataUploader {
         )
     ]
 
-
     static func uploadAll(
         questionnaireStore: QuestionnaireStore,
         patientStore: PatientStore,
@@ -65,21 +64,21 @@ class DataUploader {
         var questionnaireCount = 0
         var healthDataCount = 0
 
-        logHandler("📌 Uploading patient metadata…")
+        logHandler("uploading_metadata_log".localized)
         HealthDataManager.shared.uploadPatientMetadata(
             firstName: patientStore.patient.firstName,
             lastName: patientStore.patient.lastName,
             birthDate: patientStore.patient.birthDate
         )
 
-        logHandler("📝 Uploading questionnaires…")
+        logHandler("uploading_questionnaires_log".localized)
         questionnaireStore.uploadAllToFirestore { uploadedCount in
             questionnaireCount = uploadedCount
-            logHandler("✅ Uploaded \(uploadedCount) questionnaires.")
+            logHandler(String(format: "uploaded_questionnaires_log".localized, uploadedCount))
 
             guard let userId = HealthDataManager.shared.currentUserId else {
-                logHandler("❌ No user ID. Cannot upload health data.")
-                completion("✅ Sent \(questionnaireCount) questionnaires. ❌ No health data sent.")
+                logHandler("no_user_id_log".localized)
+                completion("upload_questionnaires_no_health_log".localized(with: questionnaireCount))
                 return
             }
 
@@ -91,7 +90,7 @@ class DataUploader {
                 logHandler: logHandler
             ) { totalHealthData in
                 healthDataCount = totalHealthData
-                let summary = "✅ Sent \(questionnaireCount) questionnaires and \(healthDataCount) health data samples."
+                let summary = "upload_summary_log".localized(with: questionnaireCount, healthDataCount)
                 logHandler(summary)
                 completion(summary)
             }
@@ -107,7 +106,7 @@ class DataUploader {
         completion: @escaping (Int) -> Void
     ) {
         if HealthDataManager.shared.isCancelled {
-            logHandler("⏹️ Upload cancelled. Skipping remaining uploaders.")
+            logHandler("upload_cancelled_log".localized)
             completion(totalUploaded)
             return
         }
@@ -120,7 +119,6 @@ class DataUploader {
         let uploader = uploaders[uploaderIndex]
 
         HealthDataManager.shared.getEffectiveUploadStartDate(for: uploader.typeIdentifier, userId: userId) { startDate in
-
             uploader.uploadSince(
                 startDate: startDate,
                 userId: userId,

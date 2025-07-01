@@ -21,7 +21,7 @@ struct DataTransferView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
-            Text("Data Transfer")
+            Text("data_transfer_title".localized)
                 .font(.title2)
                 .bold()
 
@@ -38,12 +38,12 @@ struct DataTransferView: View {
                     Text(dob.formatted(date: .long, time: .omitted))
                         .foregroundColor(.secondary)
                 } else {
-                    Text("Date of birth not set")
+                    Text("dob_not_set".localized)
                         .foregroundColor(.red)
                 }
             }
 
-            Text("By sending the data, your recently collected HealthKit values and questionnaire answers will be uploaded to the secure server. After submission, questionnaires can no longer be edited.")
+            Text("data_transfer_description".localized)
                 .font(.footnote)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -81,9 +81,9 @@ struct DataTransferView: View {
                     .cornerRadius(8)
 
                     if isUploading {
-                        Button("Cancel Upload") {
+                        Button("cancel_upload_button".localized) {
                             HealthDataManager.shared.isCancelled = true
-                            uploadLogs.append("⛔ Upload cancelled.")
+                            uploadLogs.append("⛔ " + "upload_cancelled_log".localized)
                         }
                         .foregroundColor(.red)
                         .padding(.top, 4)
@@ -91,7 +91,6 @@ struct DataTransferView: View {
                 }
                 .padding(.top, 12)
             }
-
 
             Spacer()
 
@@ -104,7 +103,7 @@ struct DataTransferView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                 } else {
-                    Text("Send Data")
+                    Text("send_data_button".localized)
                         .frame(maxWidth: .infinity)
                         .padding()
                 }
@@ -114,15 +113,14 @@ struct DataTransferView: View {
             .cornerRadius(12)
             .disabled(isUploading)
             .padding(.top, 16)
-            .alert("Are you sure?", isPresented: $showConfirmation) {
-                Button("Send", role: .destructive) {
+            .alert("upload_confirm_title".localized, isPresented: $showConfirmation) {
+                Button("send_button".localized, role: .destructive) {
                     isUploading = true
                     uploadResult = nil
                     uploadProgress = 0.0
                     progressText = ""
                     uploadLogs = []
 
-                    // 🔄 Reset cancel flag
                     HealthDataManager.shared.isCancelled = false
 
                     print("🚀 Uploading data for \(patientStore.patient.fullName)")
@@ -131,7 +129,7 @@ struct DataTransferView: View {
                         patientStore: patientStore,
                         progressHandler: { current, total in
                             uploadProgress = Double(current) / Double(max(total, 1))
-                            progressText = "Uploading \(current) of \(total)"
+                            progressText = String(format: "uploading_progress_text".localized, current, total)
                         },
                         logHandler: { newLog in
                             DispatchQueue.main.async {
@@ -144,18 +142,19 @@ struct DataTransferView: View {
                         }
                     )
                 }
-                Button("Cancel", role: .cancel) { }
+                Button("cancel_button".localized, role: .cancel) {}
             } message: {
-                Text("This action will send all current patient data to the server.")
+                Text("upload_confirm_message".localized)
             }
 
             Spacer()
         }
         .padding()
-        .navigationTitle("Transfer")
+        .navigationTitle("transfer_nav_title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             print("🩺 PatientStore contents: \(patientStore.patient)")
         }
     }
 }
+

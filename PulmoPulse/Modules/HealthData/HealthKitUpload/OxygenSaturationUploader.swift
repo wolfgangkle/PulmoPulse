@@ -32,7 +32,7 @@ class OxygenSaturationUploader: HealthDataUploader {
         completion: @escaping ([HKQuantitySample]) -> Void
     ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .oxygenSaturation) else {
-            log("❌ Could not get oxygenSaturation type")
+            log("❌ " + NSLocalizedString("oxygen_type_unavailable", comment: ""))
             completion([])
             return
         }
@@ -52,16 +52,16 @@ class OxygenSaturationUploader: HealthDataUploader {
             sortDescriptors: [sort]
         ) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Failed to fetch oxygen saturation samples: \(error?.localizedDescription ?? "Unknown error")")
+                log("❌ " + String(format: NSLocalizedString("oxygen_fetch_failed", comment: ""), error?.localizedDescription ?? "Unknown error"))
                 completion([])
                 return
             }
 
-            log("🫁 Fetched \(samples.count) oxygen saturation samples.")
+            log("🫁 " + String(format: NSLocalizedString("oxygen_samples_fetched", comment: ""), samples.count))
             completion(samples)
         }
 
-        log("🫁 Querying raw oxygen saturation samples…")
+        log("🫁 " + NSLocalizedString("oxygen_querying", comment: ""))
         healthStore.execute(query)
     }
 
@@ -81,7 +81,7 @@ class OxygenSaturationUploader: HealthDataUploader {
         for sample in samples {
             if manager?.isCancelled == true { break }
 
-            let value = sample.quantity.doubleValue(for: .percent()) * 100.0  // Convert to %
+            let value = sample.quantity.doubleValue(for: .percent()) * 100.0
             let dateKey = formatter.string(from: sample.startDate)
             grouped[dateKey, default: []].append(value)
         }
@@ -101,7 +101,6 @@ class OxygenSaturationUploader: HealthDataUploader {
             let roundedAvg = Int(round(avgValue))
             let roundedMin = Int(round(minValue))
             let roundedMax = Int(round(maxValue))
-
 
             let date = formatter.date(from: dateKey) ?? Date()
             latestDate = max(latestDate ?? date, date)
@@ -123,10 +122,10 @@ class OxygenSaturationUploader: HealthDataUploader {
                 .document(dateKey)
                 .setData(data) { error in
                     if let error = error {
-                        log("❌ Upload error for \(dateKey): \(error.localizedDescription)")
+                        log("❌ " + String(format: NSLocalizedString("oxygen_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ Uploaded oxygen saturation for \(dateKey): avg \(roundedAvg)%")
+                        log("✅ " + String(format: NSLocalizedString("oxygen_uploaded", comment: ""), dateKey, roundedAvg))
                         progress(uploaded, total)
                     }
                     group.leave()

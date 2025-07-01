@@ -5,7 +5,6 @@
 //  Created by Wolfgang Kleinhaentz on 01/07/2025.
 //
 
-
 import SwiftUI
 
 struct SettingsView: View {
@@ -19,70 +18,81 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 // Patient
-                Section(header: Text("Account")) {
-                    Button("Edit Patient Info") {
+                Section(header: Text("account_header".localized)) {
+                    Button("edit_patient_info".localized) {
                         showingEditPatient = true
                     }
                 }
 
                 // Appearance
-                Section(header: Text("Appearance")) {
-                    Picker("App Theme", selection: $selectedAppearance) {
-                        Text("System").tag("system")
-                        Text("Light").tag("light")
-                        Text("Dark").tag("dark")
+                Section(header: Text("appearance_header".localized)) {
+                    Picker("app_theme".localized, selection: $selectedAppearance) {
+                        Text("theme_system".localized).tag("system")
+                        Text("theme_light".localized).tag("light")
+                        Text("theme_dark".localized).tag("dark")
                     }
                     .pickerStyle(.segmented)
+
+                    HStack {
+                        Text("language_label".localized)
+                        Spacer()
+                        Text(Locale.currentLanguageDisplayName)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Text("language_hint".localized)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 4)
                 }
 
-
                 // About and Support
-                Section(header: Text("About and Support")) {
+                Section(header: Text("about_support_header".localized)) {
                     HStack {
-                        Text("Version")
+                        Text("version_label".localized)
                         Spacer()
                         Text(appVersion)
                     }
                     HStack {
-                        Text("Build")
+                        Text("build_label".localized)
                         Spacer()
                         Text(buildNumber)
                     }
                     HStack {
-                        Text("Developer")
+                        Text("developer_label".localized)
                         Spacer()
                         Text("Wolfgang Kleinhaentz")
                     }
-                    Link("Contact Support", destination: URL(string: "mailto:wolfgang.kleinhaentz@gmail.com")!)
+                    Link("contact_support".localized, destination: URL(string: "mailto:wolfgang.kleinhaentz@gmail.com")!)
                 }
 
                 // Legal
-                Section(header: Text("Legal Information")) {
-                    NavigationLink("Disclaimer") {
-                        LegalDetailView(title: "Disclaimer")
+                Section(header: Text("legal_info_header".localized)) {
+                    NavigationLink("disclaimer_title".localized) {
+                        LegalDetailView(title: "disclaimer_title".localized)
                     }
-                    NavigationLink("Data Privacy") {
-                        LegalDetailView(title: "Data Privacy")
+                    NavigationLink("data_privacy_title".localized) {
+                        LegalDetailView(title: "data_privacy_title".localized)
                     }
-                    NavigationLink("Legal Disclosure") {
-                        LegalDetailView(title: "Legal Disclosure")
+                    NavigationLink("legal_disclosure_title".localized) {
+                        LegalDetailView(title: "legal_disclosure_title".localized)
                     }
-                    NavigationLink("Copyright") {
-                        LegalDetailView(title: "Copyright")
+                    NavigationLink("copyright_title".localized) {
+                        LegalDetailView(title: "copyright_title".localized)
                     }
                 }
 
                 // Danger Zone
                 Section {
-                    Button("Erase All Local Data", role: .destructive) {
+                    Button("erase_all_data_button".localized, role: .destructive) {
                         showingEraseConfirmation = true
                     }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle("settings_title".localized)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
+                    Button("done_button".localized) {
                         dismiss()
                     }
                 }
@@ -91,12 +101,16 @@ struct SettingsView: View {
                 PatientSetupView()
                     .environmentObject(patientStore)
             }
-            .confirmationDialog("Are you sure you want to erase all local data? This cannot be undone.", isPresented: $showingEraseConfirmation, titleVisibility: .visible) {
-                Button("Erase All Data", role: .destructive) {
+            .confirmationDialog(
+                "erase_all_confirm_message".localized,
+                isPresented: $showingEraseConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("erase_all_confirm_button".localized, role: .destructive) {
                     UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
                     print("🗑️ All UserDefaults erased")
                 }
-                Button("Cancel", role: .cancel) {}
+                Button("cancel_button".localized, role: .cancel) {}
             }
         }
     }
@@ -110,16 +124,24 @@ struct SettingsView: View {
     }
 }
 
-
-// MARK: - Placeholder Legal Detail View
 struct LegalDetailView: View {
     var title: String
 
     var body: some View {
         ScrollView {
-            Text("This is the \(title) page.")
+            Text("legal_detail_placeholder".localized(with: title))
                 .padding()
         }
         .navigationTitle(title)
     }
 }
+
+// MARK: - Locale helper for language name
+
+extension Locale {
+    static var currentLanguageDisplayName: String {
+        let code = Locale.current.language.languageCode?.identifier ?? "en"
+        return Locale.current.localizedString(forLanguageCode: code)?.capitalized ?? code
+    }
+}
+

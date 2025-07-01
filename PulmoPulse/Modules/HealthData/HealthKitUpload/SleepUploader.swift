@@ -5,7 +5,6 @@
 //  Created by Wolfgang Kleinhaentz on 01/07/2025.
 //
 
-
 import Foundation
 import HealthKit
 import FirebaseFirestore
@@ -29,14 +28,14 @@ struct SleepUploader: HealthDataUploader {
     }
 
     func uploadSamples(
-        _ _: [HKQuantitySample], // Ignored
+        _ _: [HKQuantitySample],
         userId: String,
         progress: @escaping (Int, Int) -> Void,
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
         guard let type = HKCategoryType.categoryType(forIdentifier: .sleepAnalysis) else {
-            log("❌ Sleep type unavailable.")
+            log("❌ " + NSLocalizedString("sleep_type_unavailable", comment: ""))
             completion(0)
             return
         }
@@ -56,12 +55,12 @@ struct SleepUploader: HealthDataUploader {
             sortDescriptors: [sort]
         ) { _, results, error in
             guard let samples = results as? [HKCategorySample], error == nil else {
-                log("❌ Sleep fetch error: \(error?.localizedDescription ?? "unknown")")
+                log("❌ " + String(format: NSLocalizedString("sleep_fetch_error", comment: ""), error?.localizedDescription ?? "unknown"))
                 completion(0)
                 return
             }
 
-            log("😴 Fetched \(samples.count) raw sleep samples. Grouping by day…")
+            log("😴 " + String(format: NSLocalizedString("sleep_samples_fetched", comment: ""), samples.count))
 
             var sleepByDay: [String: (asleep: TimeInterval, inBed: TimeInterval, sessions: Int)] = [:]
             let formatter = DateFormatter()
@@ -116,10 +115,10 @@ struct SleepUploader: HealthDataUploader {
                     .document(dayKey)
                     .setData(data) { error in
                         if let error = error {
-                            log("❌ Upload error for \(dayKey): \(error.localizedDescription)")
+                            log("❌ " + String(format: NSLocalizedString("sleep_upload_error", comment: ""), dayKey, error.localizedDescription))
                         } else {
                             uploaded += 1
-                            log("✅ Uploaded sleep summary for \(dayKey)")
+                            log("✅ " + String(format: NSLocalizedString("sleep_uploaded", comment: ""), dayKey))
                             progress(uploaded, total)
                         }
                         group.leave()
@@ -134,7 +133,7 @@ struct SleepUploader: HealthDataUploader {
             }
         }
 
-        log("🛌 Querying raw sleep samples since \(startDate.formatted())…")
+        log("🛌 " + String(format: NSLocalizedString("sleep_querying", comment: ""), startDate.formatted()))
         healthStore.execute(query)
     }
 }

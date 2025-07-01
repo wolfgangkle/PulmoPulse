@@ -19,12 +19,12 @@ struct ActivityUploader: HealthDataUploader {
     var typeIdentifier: String { "activity" }
 
     func fetchSamples(
-        since _: Date,  // Handled via manager
+        since _: Date,
         log: @escaping (String) -> Void,
         completion: @escaping ([HKQuantitySample]) -> Void
     ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned) else {
-            log("❌ Could not get active energy type.")
+            log("❌ " + NSLocalizedString("activity_type_missing", comment: ""))
             completion([])
             return
         }
@@ -44,16 +44,16 @@ struct ActivityUploader: HealthDataUploader {
             sortDescriptors: [sortDescriptor]
         ) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Failed to fetch active energy samples: \(error?.localizedDescription ?? "Unknown error")")
+                log("❌ " + String(format: NSLocalizedString("activity_fetch_failed", comment: ""), error?.localizedDescription ?? "Unknown error"))
                 completion([])
                 return
             }
 
-            log("📦 Fetched \(samples.count) active energy samples.")
+            log("📦 " + String(format: NSLocalizedString("activity_fetched", comment: ""), samples.count))
             completion(samples)
         }
 
-        log("🔥 Querying raw active energy samples from \(startDate.formatted(date: .abbreviated, time: .omitted))…")
+        log("🔥 " + String(format: NSLocalizedString("activity_querying_from", comment: ""), startDate.formatted(date: .abbreviated, time: .omitted)))
         healthStore.execute(query)
     }
 
@@ -86,7 +86,7 @@ struct ActivityUploader: HealthDataUploader {
             guard !values.isEmpty else { continue }
 
             let total = values.reduce(0, +)
-            let roundedTotal = Int(total)  // ⬅️ Round down to full kcal
+            let roundedTotal = Int(total)
 
             let date = formatter.date(from: dateKey) ?? Date()
             latestDate = max(latestDate ?? date, date)
@@ -106,10 +106,10 @@ struct ActivityUploader: HealthDataUploader {
                 .document(dateKey)
                 .setData(data) { error in
                     if let error = error {
-                        log("❌ Failed to upload activity for \(dateKey): \(error.localizedDescription)")
+                        log("❌ " + String(format: NSLocalizedString("activity_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ Uploaded activity for \(dateKey): \(roundedTotal) kcal")
+                        log("✅ " + String(format: NSLocalizedString("activity_uploaded", comment: ""), dateKey, roundedTotal))
                         progress(uploaded, grouped.count)
                     }
                     group.leave()

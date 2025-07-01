@@ -5,7 +5,6 @@
 //  Created by Wolfgang Kleinhaentz on 30/06/2025.
 //
 
-
 import SwiftUI
 
 struct PatientSetupView: View {
@@ -19,10 +18,10 @@ struct PatientSetupView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Patient Information")) {
-                    TextField("First Name", text: $firstName)
-                    TextField("Last Name", text: $lastName)
-                    DatePicker("Date of Birth", selection: $birthDate, displayedComponents: .date)
+                Section(header: Text("patient_info_section".localized)) {
+                    TextField("first_name_placeholder".localized, text: $firstName)
+                    TextField("last_name_placeholder".localized, text: $lastName)
+                    DatePicker("dob_label".localized, selection: $birthDate, displayedComponents: .date)
                 }
 
                 Section {
@@ -32,20 +31,19 @@ struct PatientSetupView: View {
                         patientStore.patient = patient
                         dismiss()
                     }) {
-                        Text("Save")
+                        Text("save_button".localized)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .foregroundColor(.white)
                             .background(Color.red)
                             .cornerRadius(12)
                     }
-                    .listRowBackground(Color.clear) // avoids row styling conflicts
+                    .listRowBackground(Color.clear)
                 }
             }
-            .navigationTitle("Patient Setup")
+            .navigationTitle("patient_setup_title".localized)
         }
         .onAppear {
-            // Preload existing patient info if it exists
             let patient = patientStore.patient
             firstName = patient.firstName
             lastName = patient.lastName
@@ -55,3 +53,4 @@ struct PatientSetupView: View {
         }
     }
 }
+

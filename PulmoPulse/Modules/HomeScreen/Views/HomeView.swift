@@ -19,7 +19,7 @@ struct HomeView: View {
                 QuestionnaireListView()
                 Spacer()
             }
-            .navigationTitle("Questionnaires")
+            .navigationTitle("questionnaires_title".localized)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button(action: {
@@ -42,7 +42,7 @@ struct HomeView: View {
                 }
             }
         }
-        .tint(.red) // ✅ this now handles icon colors globally
+        .tint(.red)
         .sheet(isPresented: $showingAddSheet) {
             AddQuestionnaireView()
         }
@@ -56,5 +56,4 @@ struct HomeView: View {
         }
     }
 }
-
 

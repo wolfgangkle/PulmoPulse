@@ -5,7 +5,6 @@
 //  Created by Wolfgang Kleinhaentz on 01/07/2025.
 //
 
-
 import Foundation
 import HealthKit
 import FirebaseFirestore
@@ -25,7 +24,7 @@ struct BodyWeightUploader: HealthDataUploader {
         completion: @escaping ([HKQuantitySample]) -> Void
     ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .bodyMass) else {
-            log("❌ Body Mass type unavailable.")
+            log("❌ " + NSLocalizedString("body_weight_type_missing", comment: ""))
             completion([])
             return
         }
@@ -45,16 +44,16 @@ struct BodyWeightUploader: HealthDataUploader {
             sortDescriptors: [sort]
         ) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Failed to fetch weight samples: \(error?.localizedDescription ?? "Unknown error")")
+                log("❌ " + String(format: NSLocalizedString("body_weight_fetch_failed", comment: ""), error?.localizedDescription ?? "Unknown error"))
                 completion([])
                 return
             }
 
-            log("⚖️ Fetched \(samples.count) body weight samples.")
+            log("⚖️ " + String(format: NSLocalizedString("body_weight_fetched", comment: ""), samples.count))
             completion(samples)
         }
 
-        log("📥 Querying raw body weight samples…")
+        log("📥 " + NSLocalizedString("body_weight_querying", comment: ""))
         healthStore.execute(query)
     }
 
@@ -70,7 +69,6 @@ struct BodyWeightUploader: HealthDataUploader {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
 
-        // Filter to latest per day
         var latestPerDay: [String: HKQuantitySample] = [:]
 
         for sample in samples {
@@ -114,10 +112,10 @@ struct BodyWeightUploader: HealthDataUploader {
                 .document(dateKey)
                 .setData(data) { error in
                     if let error = error {
-                        log("❌ Upload error for \(dateKey): \(error.localizedDescription)")
+                        log("❌ " + String(format: NSLocalizedString("body_weight_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ Uploaded weight for \(dateKey): \(roundedKg) kg")
+                        log("✅ " + String(format: NSLocalizedString("body_weight_uploaded", comment: ""), dateKey, roundedKg))
                         progress(uploaded, total)
                     }
                     group.leave()

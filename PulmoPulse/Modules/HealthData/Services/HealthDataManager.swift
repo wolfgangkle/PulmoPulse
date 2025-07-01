@@ -1,4 +1,3 @@
-//
 //  HealthDataManager.swift
 //  PulmoPulse
 //
@@ -17,9 +16,8 @@ class HealthDataManager: ObservableObject {
     private var db: Firestore { Firestore.firestore() }
 
     @Published var isCancelled = false
-    var dataUploadWindowDays: Int = 180  // Adjust to change upload window size
+    var dataUploadWindowDays: Int = 180
 
-    // 🔌 Registered uploaders
     private lazy var uploaders: [HealthDataUploader] = [
         HeartRateUploader(
             dataTypes: [HKObjectType.quantityType(forIdentifier: .heartRate)!],
@@ -64,7 +62,6 @@ class HealthDataManager: ObservableObject {
         )
     ]
 
-
     func requestAuthorization(completion: @escaping (Bool) -> Void) {
         let typesToRead = Set(uploaders.flatMap { $0.dataTypes })
         healthStore.requestAuthorization(toShare: nil, read: typesToRead) { success, _ in
@@ -80,7 +77,7 @@ class HealthDataManager: ObservableObject {
         completion: @escaping (Int) -> Void
     ) {
         guard let userId = Auth.auth().currentUser?.uid else {
-            logHandler("❌ No authenticated user. Aborting upload.")
+            logHandler("❌ " + NSLocalizedString("no_user_abort_upload", comment: ""))
             completion(0)
             return
         }
@@ -88,7 +85,9 @@ class HealthDataManager: ObservableObject {
         let startDate = Calendar.current.date(byAdding: .day, value: -dataUploadWindowDays, to: Date())
             ?? Date(timeIntervalSinceNow: -7 * 24 * 3600)
 
-        logHandler("📆 Uploading data from past \(dataUploadWindowDays) days (\(startDate.formatted())).")
+        let formattedDate = startDate.formatted()
+        let introMessage = String(format: NSLocalizedString("uploading_from_days", comment: ""), dataUploadWindowDays, formattedDate)
+        logHandler("📆 \(introMessage)")
 
         var totalUploaded = 0
         let group = DispatchGroup()
@@ -107,14 +106,15 @@ class HealthDataManager: ObservableObject {
         }
 
         group.notify(queue: .main) {
-            logHandler("✅ All uploaders finished. Total uploaded: \(totalUploaded)")
+            let finishedMessage = String(format: NSLocalizedString("all_uploaders_finished", comment: ""), totalUploaded)
+            logHandler("✅ \(finishedMessage)")
             completion(totalUploaded)
         }
     }
 
     func uploadPatientMetadata(firstName: String, lastName: String, birthDate: Date?) {
         guard let userId = Auth.auth().currentUser?.uid else {
-            print("❌ No authenticated user. Skipping metadata upload.")
+            print("❌ " + NSLocalizedString("no_user_skip_metadata", comment: ""))
             return
         }
 
@@ -136,14 +136,12 @@ class HealthDataManager: ObservableObject {
 
         docRef.setData(metadata, merge: true) { error in
             if let error = error {
-                print("❌ Failed to upload patient metadata:", error.localizedDescription)
+                print("❌ " + NSLocalizedString("metadata_upload_failed", comment: "") + ": \(error.localizedDescription)")
             } else {
-                print("📌 Uploaded patient metadata to Firestore.")
+                print("📌 " + NSLocalizedString("metadata_uploaded", comment: ""))
             }
         }
     }
-
-    // MARK: - Upload Metadata Helpers
 
     func updateLastUploadDate(_ date: Date, userId: String, for type: String) {
         let docRef = db
@@ -159,14 +157,13 @@ class HealthDataManager: ObservableObject {
             "updatedAt": FieldValue.serverTimestamp()
         ], merge: true) { error in
             if let error = error {
-                print("❌ Failed to update last upload date for \(type):", error.localizedDescription)
+                print("❌ " + String(format: NSLocalizedString("last_upload_update_failed", comment: ""), type) + ": \(error.localizedDescription)")
             } else {
-                print("📌 Updated \(fieldName) timestamp.")
+                print("📌 " + String(format: NSLocalizedString("last_upload_updated", comment: ""), fieldName))
             }
         }
     }
 
-    /// 👇 NEW: Use last upload date (if not older than maxDaysBack), otherwise fallback to maxDaysBack
     func getEffectiveUploadStartDate(for type: String, userId: String, maxDaysBack: Int = 7, completion: @escaping (Date) -> Void) {
         let docRef = db
             .collection("patients")

@@ -21,12 +21,12 @@ struct StepsUploader: HealthDataUploader {
     var typeIdentifier: String { "steps" }
 
     func fetchSamples(
-        since _: Date,  // Ignored — logic now inside
+        since _: Date,
         log: @escaping (String) -> Void,
         completion: @escaping ([HKQuantitySample]) -> Void
     ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
-            log("❌ Step Count type unavailable.")
+            log("❌ " + NSLocalizedString("steps_type_unavailable", comment: ""))
             completion([])
             return
         }
@@ -46,16 +46,16 @@ struct StepsUploader: HealthDataUploader {
             sortDescriptors: [sort]
         ) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Failed to fetch step samples: \(error?.localizedDescription ?? "Unknown error")")
+                log("❌ " + String(format: NSLocalizedString("steps_fetch_error", comment: ""), error?.localizedDescription ?? "Unknown error"))
                 completion([])
                 return
             }
 
-            log("👟 Fetched \(samples.count) step samples.")
+            log("👟 " + String(format: NSLocalizedString("steps_samples_fetched", comment: ""), samples.count))
             completion(samples)
         }
 
-        log("👟 Querying raw step count samples…")
+        log("👟 " + NSLocalizedString("steps_querying", comment: ""))
         healthStore.execute(query)
     }
 
@@ -109,10 +109,10 @@ struct StepsUploader: HealthDataUploader {
                 .document(dateKey)
                 .setData(data) { error in
                     if let error = error {
-                        log("❌ Upload error for \(dateKey): \(error.localizedDescription)")
+                        log("❌ " + String(format: NSLocalizedString("steps_upload_error", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ Uploaded step count for \(dateKey): \(steps) steps")
+                        log("✅ " + String(format: NSLocalizedString("steps_uploaded", comment: ""), dateKey, steps))
                         progress(uploaded, total)
                     }
                     group.leave()

@@ -19,12 +19,12 @@ struct HeartRateUploader: HealthDataUploader {
     var typeIdentifier: String { "heartRate" }
 
     func fetchSamples(
-        since _: Date,  // Not used anymore
+        since _: Date,
         log: @escaping (String) -> Void,
         completion: @escaping ([HKQuantitySample]) -> Void
     ) {
         guard let type = HKQuantityType.quantityType(forIdentifier: .heartRate) else {
-            log("❌ HeartRate type unavailable.")
+            log("❌ " + NSLocalizedString("heart_rate_type_missing", comment: ""))
             completion([])
             return
         }
@@ -33,18 +33,23 @@ struct HeartRateUploader: HealthDataUploader {
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [])
         let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
 
-        let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sort]) { _, results, error in
+        let query = HKSampleQuery(
+            sampleType: type,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [sort]
+        ) { _, results, error in
             guard let samples = results as? [HKQuantitySample], error == nil else {
-                log("❌ Failed to fetch heartRate samples: \(error?.localizedDescription ?? "Unknown error")")
+                log("❌ " + String(format: NSLocalizedString("heart_rate_fetch_failed", comment: ""), error?.localizedDescription ?? "Unknown error"))
                 completion([])
                 return
             }
 
-            log("📊 Fetched \(samples.count) heartRate samples.")
+            log("📊 " + String(format: NSLocalizedString("heart_rate_fetched", comment: ""), samples.count))
             completion(samples)
         }
 
-        log("💓 Querying raw heart rate samples since \(startDate.formatted())…")
+        log("💓 " + String(format: NSLocalizedString("heart_rate_querying", comment: ""), startDate.formatted()))
         healthStore.execute(query)
     }
 
@@ -57,10 +62,10 @@ struct HeartRateUploader: HealthDataUploader {
     ) {
         let bpmUnit = HKUnit(from: "count/min")
         let calendar = Calendar.current
-
-        var grouped: [String: [Double]] = [:]
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
+
+        var grouped: [String: [Double]] = [:]
 
         for sample in samples {
             if manager?.isCancelled == true { break }
@@ -84,10 +89,8 @@ struct HeartRateUploader: HealthDataUploader {
             let roundedMax = round(maxValue * 10) / 10.0
             let roundedAvg = round(avg * 10) / 10.0
 
-
             let date = formatter.date(from: dateKey) ?? Date()
             latestDate = max(latestDate ?? date, date)
-
 
             let data: [String: Any] = [
                 "date": Timestamp(date: date),
@@ -106,10 +109,10 @@ struct HeartRateUploader: HealthDataUploader {
                 .document(dateKey)
                 .setData(data) { error in
                     if let error = error {
-                        log("❌ Failed to upload heart rate for \(dateKey): \(error.localizedDescription)")
+                        log("❌ " + String(format: NSLocalizedString("heart_rate_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ Uploaded daily heart rate for \(dateKey)")
+                        log("✅ " + String(format: NSLocalizedString("heart_rate_uploaded", comment: ""), dateKey))
                         progress(uploaded, grouped.count)
                     }
                     group.leave()
