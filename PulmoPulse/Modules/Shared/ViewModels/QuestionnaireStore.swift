@@ -53,8 +53,8 @@ class QuestionnaireStore: ObservableObject {
 
             let dict: [String: Any] = [
                 "id": entry.id.uuidString,
-                "timestamp": Timestamp(date: entry.timestamp), // ✅ human-readable timestamp
-                "answers": entry.answers
+                "timestamp": Timestamp(date: entry.timestamp),
+                "answers": convertAnswersForFirestore(entry.answers)
             ]
 
             collection.addDocument(data: dict) { error in
@@ -73,6 +73,35 @@ class QuestionnaireStore: ObservableObject {
             print("📤 Uploaded \(uploadCount) questionnaires to Firestore.")
             completion(uploadCount)
         }
+    }
+
+    /// 🔄 Convert local string-based answers to Firestore-typed values
+    private func convertAnswersForFirestore(_ answers: [String: String]) -> [String: Any] {
+        var result: [String: Any] = [:]
+
+        for (key, value) in answers {
+            if let question = defaultQuestionnaireSchema.first(where: { $0.id == key }) {
+                switch question.type {
+                case .rating1to5:
+                    result[key] = Int(value) ?? NSNull()
+
+                case .multiSelect:
+                    result[key] = value
+                        .components(separatedBy: ",")
+                        .map { $0.trimmingCharacters(in: .whitespaces) }
+
+                case .yesNo:
+                    result[key] = (value == "Yes")
+
+                default:
+                    result[key] = value
+                }
+            } else {
+                result[key] = value
+            }
+        }
+
+        return result
     }
 }
 

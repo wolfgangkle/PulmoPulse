@@ -5,7 +5,6 @@
 //  Created by Wolfgang Kleinhaentz on 30/06/2025.
 //
 
-
 import SwiftUI
 
 struct QuestionnaireListView: View {
@@ -18,18 +17,13 @@ struct QuestionnaireListView: View {
             } else {
                 List {
                     ForEach(questionnaireStore.entries.sorted(by: { $0.timestamp > $1.timestamp })) { entry in
-                        NavigationLink(destination: QuestionnaireDetailView(entry: entry)) {
-                            VStack(alignment: .leading) {
-                                Text(entry.timestamp.formatted(date: .abbreviated, time: .shortened))
-                                    .font(.headline)
-
-                                ForEach(entry.answers.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                                    Text("\(key): \(value.isEmpty ? "(empty)" : value)")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                }
-                            }
-                            .padding(.vertical, 4)
+                        NavigationLink {
+                            QuestionnaireEditView(originalEntry: entry)
+                                .environmentObject(questionnaireStore)
+                        } label: {
+                            Text(entry.timestamp.formatted(date: .abbreviated, time: .shortened))
+                                .font(.headline)
+                                .padding(.vertical, 8)
                         }
                     }
                     .onDelete(perform: deleteEntry)
@@ -49,5 +43,4 @@ struct QuestionnaireListView: View {
         }
     }
 }
-
 
