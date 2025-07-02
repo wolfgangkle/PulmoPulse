@@ -23,11 +23,11 @@ struct QuestionnaireEditView: View {
             List {
                 ForEach(questions) { question in
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(question.label)
+                        Text(NSLocalizedString(question.label, comment: ""))
                             .font(.headline)
 
                         if case .rating1to5 = question.type {
-                            Text("rating_scale_hint".localized)
+                            Text(NSLocalizedString("rating_scale_hint", comment: ""))
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
@@ -38,11 +38,11 @@ struct QuestionnaireEditView: View {
                 }
             }
             .listStyle(.plain)
-            .navigationTitle("edit_questionnaire_title".localized)
+            .navigationTitle(NSLocalizedString("edit_questionnaire_title", comment: ""))
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     if hasChanges {
-                        Button("save_button".localized) {
+                        Button(NSLocalizedString("save_button", comment: "")) {
                             saveEdits()
                             dismiss()
                         }
@@ -62,22 +62,37 @@ struct QuestionnaireEditView: View {
 
         switch question.type {
         case .yesNo:
-            buttonRow(options: ["yes".localized, "no".localized], selected: selected) { choice in
+            buttonRow(
+                options: [
+                    NSLocalizedString("yes", comment: ""),
+                    NSLocalizedString("no", comment: "")
+                ],
+                selected: selected
+            ) { choice in
                 updateAnswer(id: question.id, value: choice)
             }
 
         case .rating1to5:
-            buttonRow(options: (1...5).map { String($0) }, selected: selected) { choice in
+            buttonRow(
+                options: (1...5).map { String($0) },
+                selected: selected
+            ) { choice in
                 updateAnswer(id: question.id, value: choice)
             }
 
         case .multipleChoice(let options):
-            buttonRow(options: options.map { $0.localized }, selected: selected) { choice in
+            buttonRow(
+                options: options.map { NSLocalizedString($0, comment: "") },
+                selected: selected
+            ) { choice in
                 updateAnswer(id: question.id, value: choice)
             }
 
         case .multiSelect(let options):
-            multiSelectRow(questionId: question.id, options: options.map { $0.localized })
+            multiSelectRow(
+                questionId: question.id,
+                options: options.map { NSLocalizedString($0, comment: "") }
+            )
         }
     }
 
@@ -147,3 +162,4 @@ struct QuestionnaireEditView: View {
         questionnaireStore.add(updatedEntry)
     }
 }
+

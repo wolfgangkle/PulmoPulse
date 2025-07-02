@@ -8,40 +8,40 @@
 import Foundation
 
 let defaultQuestionnaireSchema: [QuestionFieldModel] = [
-    QuestionFieldModel(id: "meds", label: "did_you_take_your_medication".localized, type: .yesNo),
-    QuestionFieldModel(id: "therapy", label: "did_you_do_airway_clearance".localized, type: .yesNo),
-    QuestionFieldModel(id: "inhaler", label: "did_you_use_inhaler".localized, type: .yesNo),
-    QuestionFieldModel(id: "feel", label: "how_do_you_feel_today".localized, type: .rating1to5),
-    QuestionFieldModel(id: "sleep", label: "how_well_did_you_sleep".localized, type: .rating1to5),
-    QuestionFieldModel(id: "breath", label: "did_you_experience_breathlessness".localized, type: .multipleChoice(options: [
-        "none".localized,
-        "mild".localized,
-        "moderate".localized,
-        "severe".localized
+    QuestionFieldModel(id: "meds", label: NSLocalizedString("did_you_take_your_medication", comment: ""), type: .yesNo),
+    QuestionFieldModel(id: "therapy", label: NSLocalizedString("did_you_do_airway_clearance", comment: ""), type: .yesNo),
+    QuestionFieldModel(id: "inhaler", label: NSLocalizedString("did_you_use_inhaler", comment: ""), type: .yesNo),
+    QuestionFieldModel(id: "feel", label: NSLocalizedString("how_do_you_feel_today", comment: ""), type: .rating1to5),
+    QuestionFieldModel(id: "sleep", label: NSLocalizedString("how_well_did_you_sleep", comment: ""), type: .rating1to5),
+    QuestionFieldModel(id: "breath", label: NSLocalizedString("did_you_experience_breathlessness", comment: ""), type: .multipleChoice(options: [
+        NSLocalizedString("none", comment: ""),
+        NSLocalizedString("mild", comment: ""),
+        NSLocalizedString("moderate", comment: ""),
+        NSLocalizedString("severe", comment: "")
     ])),
-    QuestionFieldModel(id: "cough", label: "did_you_cough_more".localized, type: .multipleChoice(options: [
-        "yes".localized,
-        "no".localized,
-        "not_sure".localized
+    QuestionFieldModel(id: "cough", label: NSLocalizedString("did_you_cough_more", comment: ""), type: .multipleChoice(options: [
+        NSLocalizedString("yes", comment: ""),
+        NSLocalizedString("no", comment: ""),
+        NSLocalizedString("not_sure", comment: "")
     ])),
-    QuestionFieldModel(id: "digestion", label: "did_you_have_digestive_issues".localized, type: .multipleChoice(options: [
-        "no".localized,
-        "mild".localized,
-        "severe".localized
+    QuestionFieldModel(id: "digestion", label: NSLocalizedString("did_you_have_digestive_issues", comment: ""), type: .multipleChoice(options: [
+        NSLocalizedString("no", comment: ""),
+        NSLocalizedString("mild", comment: ""),
+        NSLocalizedString("severe", comment: "")
     ])),
-    QuestionFieldModel(id: "appetite", label: "how_was_your_appetite".localized, type: .rating1to5),
-    QuestionFieldModel(id: "infectionSigns", label: "did_you_notice_infection_signs".localized, type: .multiSelect(options: [
-        "fever".localized,
-        "increased_mucus".localized,
-        "change_mucus_color".localized,
-        "chest_pain".localized,
-        "none_of_the_above".localized
+    QuestionFieldModel(id: "appetite", label: NSLocalizedString("how_was_your_appetite", comment: ""), type: .rating1to5),
+    QuestionFieldModel(id: "infectionSigns", label: NSLocalizedString("did_you_notice_infection_signs", comment: ""), type: .multiSelect(options: [
+        NSLocalizedString("fever", comment: ""),
+        NSLocalizedString("increased_mucus", comment: ""),
+        NSLocalizedString("change_mucus_color", comment: ""),
+        NSLocalizedString("chest_pain", comment: ""),
+        NSLocalizedString("none_of_the_above", comment: "")
     ])),
-    QuestionFieldModel(id: "exercise", label: "did_you_exercise_today".localized, type: .yesNo),
-    QuestionFieldModel(id: "hydration", label: "did_you_stay_hydrated".localized, type: .multipleChoice(options: [
-        "yes".localized,
-        "no".localized,
-        "not_sure".localized
+    QuestionFieldModel(id: "exercise", label: NSLocalizedString("did_you_exercise_today", comment: ""), type: .yesNo),
+    QuestionFieldModel(id: "hydration", label: NSLocalizedString("did_you_stay_hydrated", comment: ""), type: .multipleChoice(options: [
+        NSLocalizedString("yes", comment: ""),
+        NSLocalizedString("no", comment: ""),
+        NSLocalizedString("not_sure", comment: "")
     ]))
 ]
 

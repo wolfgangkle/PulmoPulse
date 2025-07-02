@@ -18,81 +18,81 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 // Patient
-                Section(header: Text("account_header".localized)) {
-                    Button("edit_patient_info".localized) {
+                Section(header: Text(NSLocalizedString("account_header", comment: ""))) {
+                    Button(NSLocalizedString("edit_patient_info", comment: "")) {
                         showingEditPatient = true
                     }
                 }
 
                 // Appearance
-                Section(header: Text("appearance_header".localized)) {
-                    Picker("app_theme".localized, selection: $selectedAppearance) {
-                        Text("theme_system".localized).tag("system")
-                        Text("theme_light".localized).tag("light")
-                        Text("theme_dark".localized).tag("dark")
+                Section(header: Text(NSLocalizedString("appearance_header", comment: ""))) {
+                    Picker(NSLocalizedString("app_theme", comment: ""), selection: $selectedAppearance) {
+                        Text(NSLocalizedString("theme_system", comment: "")).tag("system")
+                        Text(NSLocalizedString("theme_light", comment: "")).tag("light")
+                        Text(NSLocalizedString("theme_dark", comment: "")).tag("dark")
                     }
                     .pickerStyle(.segmented)
 
                     HStack {
-                        Text("language_label".localized)
+                        Text(NSLocalizedString("language_label", comment: ""))
                         Spacer()
                         Text(Locale.currentLanguageDisplayName)
                             .foregroundStyle(.secondary)
                     }
 
-                    Text("language_hint".localized)
+                    Text(NSLocalizedString("language_hint", comment: ""))
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .padding(.top, 4)
                 }
 
                 // About and Support
-                Section(header: Text("about_support_header".localized)) {
+                Section(header: Text(NSLocalizedString("about_support_header", comment: ""))) {
                     HStack {
-                        Text("version_label".localized)
+                        Text(NSLocalizedString("version_label", comment: ""))
                         Spacer()
                         Text(appVersion)
                     }
                     HStack {
-                        Text("build_label".localized)
+                        Text(NSLocalizedString("build_label", comment: ""))
                         Spacer()
                         Text(buildNumber)
                     }
                     HStack {
-                        Text("developer_label".localized)
+                        Text(NSLocalizedString("developer_label", comment: ""))
                         Spacer()
                         Text("Wolfgang Kleinhaentz")
                     }
-                    Link("contact_support".localized, destination: URL(string: "mailto:wolfgang.kleinhaentz@gmail.com")!)
+                    Link(NSLocalizedString("contact_support", comment: ""), destination: URL(string: "mailto:wolfgang.kleinhaentz@gmail.com")!)
                 }
 
                 // Legal
-                Section(header: Text("legal_info_header".localized)) {
-                    NavigationLink("disclaimer_title".localized) {
-                        LegalDetailView(title: "disclaimer_title".localized)
+                Section(header: Text(NSLocalizedString("legal_info_header", comment: ""))) {
+                    NavigationLink(NSLocalizedString("disclaimer_title", comment: "")) {
+                        LegalDetailView(title: NSLocalizedString("disclaimer_title", comment: ""), bodyKey: "disclaimer_body")
                     }
-                    NavigationLink("data_privacy_title".localized) {
-                        LegalDetailView(title: "data_privacy_title".localized)
+                    NavigationLink(NSLocalizedString("data_privacy_title", comment: "")) {
+                        LegalDetailView(title: NSLocalizedString("data_privacy_title", comment: ""), bodyKey: "data_privacy_body")
                     }
-                    NavigationLink("legal_disclosure_title".localized) {
-                        LegalDetailView(title: "legal_disclosure_title".localized)
+                    NavigationLink(NSLocalizedString("legal_disclosure_title", comment: "")) {
+                        LegalDetailView(title: NSLocalizedString("legal_disclosure_title", comment: ""), bodyKey: "legal_disclosure_body")
                     }
-                    NavigationLink("copyright_title".localized) {
-                        LegalDetailView(title: "copyright_title".localized)
+                    NavigationLink(NSLocalizedString("copyright_title", comment: "")) {
+                        LegalDetailView(title: NSLocalizedString("copyright_title", comment: ""), bodyKey: "copyright_body")
                     }
                 }
 
                 // Danger Zone
                 Section {
-                    Button("erase_all_data_button".localized, role: .destructive) {
+                    Button(NSLocalizedString("erase_all_data_button", comment: ""), role: .destructive) {
                         showingEraseConfirmation = true
                     }
                 }
             }
-            .navigationTitle("settings_title".localized)
+            .navigationTitle(NSLocalizedString("settings_title", comment: ""))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("done_button".localized) {
+                    Button(NSLocalizedString("done_button", comment: "")) {
                         dismiss()
                     }
                 }
@@ -102,15 +102,15 @@ struct SettingsView: View {
                     .environmentObject(patientStore)
             }
             .confirmationDialog(
-                "erase_all_confirm_message".localized,
+                NSLocalizedString("erase_all_confirm_message", comment: ""),
                 isPresented: $showingEraseConfirmation,
                 titleVisibility: .visible
             ) {
-                Button("erase_all_confirm_button".localized, role: .destructive) {
+                Button(NSLocalizedString("erase_all_confirm_button", comment: ""), role: .destructive) {
                     UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
                     print("🗑️ All UserDefaults erased")
                 }
-                Button("cancel_button".localized, role: .cancel) {}
+                Button(NSLocalizedString("cancel_button", comment: ""), role: .cancel) {}
             }
         }
     }
@@ -124,12 +124,15 @@ struct SettingsView: View {
     }
 }
 
+// MARK: - Legal Detail View
+
 struct LegalDetailView: View {
     var title: String
+    var bodyKey: String
 
     var body: some View {
         ScrollView {
-            Text("legal_detail_placeholder".localized(with: title))
+            Text(NSLocalizedString(bodyKey, comment: ""))
                 .padding()
         }
         .navigationTitle(title)
@@ -143,5 +146,13 @@ extension Locale {
         let code = Locale.current.language.languageCode?.identifier ?? "en"
         return Locale.current.localizedString(forLanguageCode: code)?.capitalized ?? code
     }
+}
+
+// MARK: - Dummy localization keys for string extraction
+private func _registerLegalLocalizationKeys() {
+    _ = NSLocalizedString("disclaimer_body", comment: "Body text for Disclaimer")
+    _ = NSLocalizedString("data_privacy_body", comment: "Body text for Data Privacy")
+    _ = NSLocalizedString("legal_disclosure_body", comment: "Body text for Legal Disclosure")
+    _ = NSLocalizedString("copyright_body", comment: "Body text for Copyright")
 }
 

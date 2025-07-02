@@ -18,10 +18,14 @@ struct PatientSetupView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("patient_info_section".localized)) {
-                    TextField("first_name_placeholder".localized, text: $firstName)
-                    TextField("last_name_placeholder".localized, text: $lastName)
-                    DatePicker("dob_label".localized, selection: $birthDate, displayedComponents: .date)
+                Section(header: Text(NSLocalizedString("patient_info_section", comment: ""))) {
+                    TextField(NSLocalizedString("first_name_placeholder", comment: ""), text: $firstName)
+                    TextField(NSLocalizedString("last_name_placeholder", comment: ""), text: $lastName)
+                    DatePicker(
+                        NSLocalizedString("dob_label", comment: ""),
+                        selection: $birthDate,
+                        displayedComponents: .date
+                    )
                 }
 
                 Section {
@@ -31,7 +35,7 @@ struct PatientSetupView: View {
                         patientStore.patient = patient
                         dismiss()
                     }) {
-                        Text("save_button".localized)
+                        Text(NSLocalizedString("save_button", comment: ""))
                             .frame(maxWidth: .infinity)
                             .padding()
                             .foregroundColor(.white)
@@ -41,7 +45,7 @@ struct PatientSetupView: View {
                     .listRowBackground(Color.clear)
                 }
             }
-            .navigationTitle("patient_setup_title".localized)
+            .navigationTitle(NSLocalizedString("patient_setup_title", comment: ""))
         }
         .onAppear {
             let patient = patientStore.patient

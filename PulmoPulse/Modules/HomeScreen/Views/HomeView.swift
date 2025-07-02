@@ -19,7 +19,7 @@ struct HomeView: View {
                 QuestionnaireListView()
                 Spacer()
             }
-            .navigationTitle("questionnaires_title".localized)
+            .navigationTitle(NSLocalizedString("questionnaires_title", comment: "Title for the list of questionnaires"))
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button(action: {

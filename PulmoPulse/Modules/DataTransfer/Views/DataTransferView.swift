@@ -21,7 +21,7 @@ struct DataTransferView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
-            Text("data_transfer_title".localized)
+            Text(NSLocalizedString("data_transfer_title", comment: ""))
                 .font(.title2)
                 .bold()
 
@@ -38,12 +38,12 @@ struct DataTransferView: View {
                     Text(dob.formatted(date: .long, time: .omitted))
                         .foregroundColor(.secondary)
                 } else {
-                    Text("dob_not_set".localized)
+                    Text(NSLocalizedString("dob_not_set", comment: ""))
                         .foregroundColor(.red)
                 }
             }
 
-            Text("data_transfer_description".localized)
+            Text(NSLocalizedString("data_transfer_description", comment: ""))
                 .font(.footnote)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -81,9 +81,9 @@ struct DataTransferView: View {
                     .cornerRadius(8)
 
                     if isUploading {
-                        Button("cancel_upload_button".localized) {
+                        Button(NSLocalizedString("cancel_upload_button", comment: "")) {
                             HealthDataManager.shared.isCancelled = true
-                            uploadLogs.append("⛔ " + "upload_cancelled_log".localized)
+                            uploadLogs.append("⛔ " + NSLocalizedString("upload_cancelled_log", comment: ""))
                         }
                         .foregroundColor(.red)
                         .padding(.top, 4)
@@ -103,7 +103,7 @@ struct DataTransferView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                 } else {
-                    Text("send_data_button".localized)
+                    Text(NSLocalizedString("send_data_button", comment: ""))
                         .frame(maxWidth: .infinity)
                         .padding()
                 }
@@ -113,8 +113,8 @@ struct DataTransferView: View {
             .cornerRadius(12)
             .disabled(isUploading)
             .padding(.top, 16)
-            .alert("upload_confirm_title".localized, isPresented: $showConfirmation) {
-                Button("send_button".localized, role: .destructive) {
+            .alert(NSLocalizedString("upload_confirm_title", comment: ""), isPresented: $showConfirmation) {
+                Button(NSLocalizedString("send_button", comment: ""), role: .destructive) {
                     isUploading = true
                     uploadResult = nil
                     uploadProgress = 0.0
@@ -129,7 +129,10 @@ struct DataTransferView: View {
                         patientStore: patientStore,
                         progressHandler: { current, total in
                             uploadProgress = Double(current) / Double(max(total, 1))
-                            progressText = String(format: "uploading_progress_text".localized, current, total)
+                            progressText = String(
+                                format: NSLocalizedString("uploading_progress_text", comment: ""),
+                                current, total
+                            )
                         },
                         logHandler: { newLog in
                             DispatchQueue.main.async {
@@ -142,15 +145,15 @@ struct DataTransferView: View {
                         }
                     )
                 }
-                Button("cancel_button".localized, role: .cancel) {}
+                Button(NSLocalizedString("cancel_button", comment: ""), role: .cancel) {}
             } message: {
-                Text("upload_confirm_message".localized)
+                Text(NSLocalizedString("upload_confirm_message", comment: ""))
             }
 
             Spacer()
         }
         .padding()
-        .navigationTitle("transfer_nav_title".localized)
+        .navigationTitle(NSLocalizedString("transfer_nav_title", comment: ""))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             print("🩺 PatientStore contents: \(patientStore.patient)")

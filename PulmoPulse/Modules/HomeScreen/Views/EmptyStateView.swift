@@ -19,11 +19,11 @@ struct EmptyStateView: View {
                     .frame(width: 80, height: 80)
                     .foregroundColor(.gray)
 
-                Text("no_questionnaires_title".localized)
+                Text(NSLocalizedString("no_questionnaires_title", comment: ""))
                     .font(.title2)
                     .foregroundColor(.red)
 
-                Text("no_questionnaires_subtitle".localized)
+                Text(NSLocalizedString("no_questionnaires_subtitle", comment: ""))
                     .font(.subheadline)
                     .foregroundColor(.red)
                     .multilineTextAlignment(.center)

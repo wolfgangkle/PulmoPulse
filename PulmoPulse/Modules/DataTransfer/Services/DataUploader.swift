@@ -64,21 +64,21 @@ class DataUploader {
         var questionnaireCount = 0
         var healthDataCount = 0
 
-        logHandler("uploading_metadata_log".localized)
+        logHandler(NSLocalizedString("uploading_metadata_log", comment: ""))
         HealthDataManager.shared.uploadPatientMetadata(
             firstName: patientStore.patient.firstName,
             lastName: patientStore.patient.lastName,
             birthDate: patientStore.patient.birthDate
         )
 
-        logHandler("uploading_questionnaires_log".localized)
+        logHandler(NSLocalizedString("uploading_questionnaires_log", comment: ""))
         questionnaireStore.uploadAllToFirestore { uploadedCount in
             questionnaireCount = uploadedCount
-            logHandler(String(format: "uploaded_questionnaires_log".localized, uploadedCount))
+            logHandler(String(format: NSLocalizedString("uploaded_questionnaires_log", comment: ""), uploadedCount))
 
             guard let userId = HealthDataManager.shared.currentUserId else {
-                logHandler("no_user_id_log".localized)
-                completion("upload_questionnaires_no_health_log".localized(with: questionnaireCount))
+                logHandler(NSLocalizedString("no_user_id_log", comment: ""))
+                completion(String(format: NSLocalizedString("upload_questionnaires_no_health_log", comment: ""), questionnaireCount))
                 return
             }
 
@@ -90,7 +90,7 @@ class DataUploader {
                 logHandler: logHandler
             ) { totalHealthData in
                 healthDataCount = totalHealthData
-                let summary = "upload_summary_log".localized(with: questionnaireCount, healthDataCount)
+                let summary = String(format: NSLocalizedString("upload_summary_log", comment: ""), questionnaireCount, healthDataCount)
                 logHandler(summary)
                 completion(summary)
             }
@@ -106,7 +106,7 @@ class DataUploader {
         completion: @escaping (Int) -> Void
     ) {
         if HealthDataManager.shared.isCancelled {
-            logHandler("upload_cancelled_log".localized)
+            logHandler(NSLocalizedString("upload_cancelled_log", comment: ""))
             completion(totalUploaded)
             return
         }

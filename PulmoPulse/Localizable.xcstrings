@@ -1,167 +1,2186 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "about_support_header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About & Support"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informacje i wsparcie"
+          }
+        }
+      }
+    },
+    "account_header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
+          }
+        }
+      }
+    },
     "activity_fetch_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity fetch failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobieranie aktywności nie powiodło się"
+          }
+        }
+      }
     },
     "activity_fetched" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity fetched"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobrano aktywność"
+          }
+        }
+      }
     },
     "activity_querying_from" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity querying from"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wykonywanie zapytań dotyczących działań z poziomu"
+          }
+        }
+      }
     },
     "activity_type_missing" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity type missing"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak typu działania"
+          }
+        }
+      }
     },
     "activity_upload_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity upload failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przekazywanie działania nie powiodło się"
+          }
+        }
+      }
     },
     "activity_uploaded" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity uploaded"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesłana aktywność"
+          }
+        }
+      }
     },
     "all_uploaders_finished" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All uploaders finished"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszyscy przesyłający zakończyli"
+          }
+        }
+      }
+    },
+    "app_theme" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App theme"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motyw aplikacji"
+          }
+        }
+      }
+    },
+    "appearance_header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wygląd"
+          }
+        }
+      }
     },
     "body_weight_fetch_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body weight fetch failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobieranie masy ciała nie powiodło się"
+          }
+        }
+      }
     },
     "body_weight_fetched" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body weight fetched"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobrana masa ciała"
+          }
+        }
+      }
     },
     "body_weight_querying" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body weight querying"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapytanie o masę ciała"
+          }
+        }
+      }
     },
     "body_weight_type_missing" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body weight type missing"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak typu masy ciała"
+          }
+        }
+      }
     },
     "body_weight_upload_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body weight upload failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesyłanie masy ciała nie powiodło się"
+          }
+        }
+      }
     },
     "body_weight_uploaded" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body weight uploaded"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesłano masę ciała"
+          }
+        }
+      }
+    },
+    "build_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Build"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buduj"
+          }
+        }
+      }
+    },
+    "cancel_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuluj"
+          }
+        }
+      }
+    },
+    "cancel_upload_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuluj"
+          }
+        }
+      }
+    },
+    "change_mucus_color" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change in mucus color"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana koloru śluzu"
+          }
+        }
+      }
+    },
+    "chest_pain" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chest pain"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ból w klatce piersiowej"
+          }
+        }
+      }
+    },
+    "contact_support" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact Support"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skontaktuj się z pomocą"
+          }
+        }
+      }
+    },
+    "copyright_body" : {
+      "comment" : "Body text for Copyright",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PulmoPulse and all related materials, including but not limited to the app’s design, code, logos, graphics, icons, text, and other content, are the intellectual property of Wolfgang Kleinhäntz unless otherwise stated.\n\nAll rights are reserved. No part of the PulmoPulse application or its content may be copied, reproduced, modified, distributed, transmitted, or used in any form without prior written permission from the developer, except where expressly permitted by applicable law.\n\nThe PulmoPulse name and logo may not be used in any way that could cause confusion or imply endorsement without written consent.\n\nAny third-party libraries, APIs, or data sources used within the app remain the property of their respective owners and are used in compliance with their licenses."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PulmoPulse i wszystkie powiązane materiały, w tym między innymi projekt aplikacji, kod, logo, grafika, ikony, tekst i inne treści, są własnością intelektualną Wolfganga Kleinhäntza, chyba że zaznaczono inaczej.\n\nWszelkie prawa zastrzeżone. Żadna część aplikacji PulmoPulse ani jej zawartość nie może być kopiowana, reprodukowana, modyfikowana, rozpowszechniana, przesyłana ani wykorzystywana w jakiejkolwiek formie bez uprzedniej pisemnej zgody programisty, z wyjątkiem przypadków, w których jest to wyraźnie dozwolone przez obowiązujące prawo.\n\nNazwa i logo PulmoPulse nie mogą być używane w żaden sposób, który mógłby spowodować zamieszanie lub sugerować poparcie bez pisemnej zgody.\n\nWszelkie biblioteki, interfejsy API lub źródła danych innych firm używane w aplikacji pozostają własnością ich odpowiednich właścicieli i są używane zgodnie z ich licencjami."
+          }
+        }
+      }
+    },
+    "copyright_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prawa autorskie"
+          }
+        }
+      }
+    },
+    "data_privacy_body" : {
+      "comment" : "Body text for Data Privacy",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PulmoPulse respects your privacy and is committed to protecting your health data.\n\nHealth Data Collection\nPulmoPulse accesses selected health data from Apple HealthKit, such as heart rate, oxygen saturation, step count, sleep analysis, and other relevant metrics collected by your Apple Watch or iPhone. This access is granted only with your explicit permission.\n\nData Transmission & Storage\nCollected data is stored locally on your device and is not shared or transmitted automatically. You remain in full control of your information. Data is only uploaded to a secure Firestore database when you manually initiate the upload within the app (e.g., when connected to a secure internet connection such as a hospital network).\n\nResearch Use\nUploaded data may be accessed via a secure Flutter WebApp by authorized researchers or clinicians participating in PulmoPulse-related studies. This data is used solely for research and analysis purposes and is not shared with third parties or used for commercial purposes.\n\nNo Public Access or Profiling\nPulmoPulse does not create public profiles, does not use your data for advertising, and does not perform any form of automated profiling or decision-making based on your health data.\n\nSecurity Measures\nAll data transmissions are encrypted using industry-standard security protocols. Access to Firestore and the WebApp is strictly controlled and restricted to authorized research personnel. No identifiable personal information is displayed within the app or the web interface unless required and explicitly consented to for research purposes.\n\nYou Are in Control\nYou can review and manage HealthKit permissions at any time via your iPhone’s Health settings. You may also choose not to upload any data or delete the app to stop further data collection."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PulmoPulse szanuje Twoją prywatność i zobowiązuje się do ochrony Twoich danych zdrowotnych.\n\nGromadzenie danych zdrowotnych\nPulmoPulse uzyskuje dostęp do wybranych danych zdrowotnych z Apple HealthKit, takich jak tętno, saturacja tlenem, liczba kroków, analiza snu i inne istotne wskaźniki zebrane przez zegarek Apple Watch lub iPhone'a. Ten dostęp jest przyznawany tylko za Twoją wyraźną zgodą.\n\nTransmisja i przechowywanie danych\nZebrane dane są przechowywane lokalnie na Twoim urządzeniu i nie są udostępniane ani przesyłane automatycznie. Zachowujesz pełną kontrolę nad swoimi informacjami. Dane są przesyłane do bezpiecznej bazy danych Firestore tylko wtedy, gdy ręcznie zainicjujesz przesyłanie w aplikacji (np. gdy łączysz się z bezpiecznym połączeniem internetowym, takim jak sieć szpitalna).\n\nZastosowanie badawcze\nDostęp do przesłanych danych za pośrednictwem bezpiecznej aplikacji internetowej Flutter mogą uzyskać upoważnieni badacze lub klinicyści biorący udział w badaniach związanych z PulmoPulse. Dane te są wykorzystywane wyłącznie do celów badawczych i analitycznych i nie są udostępniane osobom trzecim ani wykorzystywane do celów komercyjnych.\n\nZakaz publicznego dostępu i profilowania\nPulmoPulse nie tworzy profili publicznych, nie wykorzystuje Twoich danych do celów reklamowych i nie przeprowadza żadnej formy zautomatyzowanego profilowania lub podejmowania decyzji na podstawie Twoich danych zdrowotnych.\n\nŚrodki bezpieczeństwa\nWszystkie transmisje danych są szyfrowane przy użyciu standardowych w branży protokołów bezpieczeństwa. Dostęp do Firestore i aplikacji internetowej jest ściśle kontrolowany i ograniczony do upoważnionego personelu badawczego. W aplikacji lub interfejsie internetowym nie są wyświetlane żadne dane osobowe umożliwiające identyfikację, chyba że jest to wymagane i wyrażono na to wyraźną zgodę w celach badawczych.\n\nTo Ty masz kontrolę\nMożesz przeglądać uprawnienia HealthKit i zarządzać nimi w dowolnym momencie za pomocą ustawień zdrowotnych swojego iPhone'a. Możesz także nie przesyłać żadnych danych lub usunąć aplikację, aby zatrzymać dalsze gromadzenie danych."
+          }
+        }
+      }
+    },
+    "data_privacy_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Privacy"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prywatność danych"
+          }
+        }
+      }
+    },
+    "data_transfer_description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By sending the data, your recently collected HealthKit values and questionnaire answers will be uploaded to the secure server. After submission, questionnaires can no longer be edited."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wysyłając dane, ostatnio zebrane wartości HealthKit i odpowiedzi na kwestionariusze zostaną przesłane na bezpieczny serwer. Po przesłaniu kwestionariuszy nie można już edytować."
+          }
+        }
+      }
+    },
+    "data_transfer_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data transfer"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przekazywanie danych"
+          }
+        }
+      }
+    },
+    "developer_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Developer"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deweloper"
+          }
+        }
+      }
+    },
+    "did_you_cough_more" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you cough more than usual today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy kaszlałeś dziś więcej niż zwykle?"
+          }
+        }
+      }
+    },
+    "did_you_do_airway_clearance" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you do your airway clearance therapy today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy przeprowadziłeś dzisiaj terapię udrażniania dróg oddechowych?"
+          }
+        }
+      }
+    },
+    "did_you_exercise_today" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you exercise today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy ćwiczyłeś dzisiaj?"
+          }
+        }
+      }
+    },
+    "did_you_experience_breathlessness" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you experience shortness of breath today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy doświadczyłeś dzisiaj duszności?"
+          }
+        }
+      }
+    },
+    "did_you_have_digestive_issues" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you have any digestive issues today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy miałeś dzisiaj jakieś problemy z trawieniem?"
+          }
+        }
+      }
+    },
+    "did_you_notice_infection_signs" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you notice any of the following?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy zauważyłeś któryś z poniższych?"
+          }
+        }
+      }
+    },
+    "did_you_stay_hydrated" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you stay hydrated today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy byłeś dziś nawodniony?"
+          }
+        }
+      }
+    },
+    "did_you_take_your_medication" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you take your medication today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy zażyłeś dzisiaj leki?"
+          }
+        }
+      }
+    },
+    "did_you_use_inhaler" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you use your inhaler or nebulizer today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy używałeś dzisiaj inhalatora lub nebulizatora?"
+          }
+        }
+      }
+    },
+    "disclaimer_body" : {
+      "comment" : "Body text for Disclaimer",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disclaimer \n \nPulmoPulse is not a medical device. It is not intended to diagnose, treat, cure, or prevent any disease.\n\nPulmoPulse is designed for informational and educational purposes only. The app collects health-related data from Apple HealthKit (such as heart rate, oxygen saturation, steps, and sleep patterns) and combines it with user-submitted questionnaires. This data may be used for personal health tracking and research purposes, particularly related to chronic respiratory conditions such as cystic fibrosis.\n\nNo medical advice is provided. The contents and features of this app do not constitute medical advice, diagnosis, or treatment. Always consult your doctor, physician, or qualified healthcare provider before making any medical decisions based on information displayed in the app.\n\nData Accuracy and Limitations\nThe health data collected from Apple HealthKit and the Apple Watch depends on the quality and limitations of those devices and sensors. PulmoPulse cannot guarantee the accuracy, completeness, or reliability of the data displayed in the app. Users should not rely solely on this app for any critical health decisions.\n\nResearch and Clinical Use\nPulmoPulse is part of an ongoing research initiative. Any use of the app in a clinical or academic setting must comply with local laws, institutional ethics policies, and proper informed consent procedures.\n\nLiability Disclaimer\nBy using PulmoPulse, you agree that the developers and affiliates are not liable for any damages, injuries, or adverse outcomes arising from the use of the app or reliance on the data it provides."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrzeczenie się \n \nPulmoPulse nie jest wyrobem medycznym. Nie jest przeznaczony do diagnozowania, leczenia ani zapobiegania jakiejkolwiek chorobie.\n\nPulmoPulse jest przeznaczony wyłącznie do celów informacyjnych i edukacyjnych. Aplikacja zbiera dane związane ze zdrowiem z Apple HealthKit (takie jak tętno, saturacja tlenem, kroki i wzorce snu) i łączy je z kwestionariuszami przesłanymi przez użytkowników. Dane te mogą być wykorzystywane do osobistego śledzenia stanu zdrowia i celów badawczych, w szczególności związanych z przewlekłymi chorobami układu oddechowego, takimi jak mukowiscydoza.\n\nNie udziela się porady lekarskiej. Zawartość i funkcje tej aplikacji nie stanowią porady medycznej, diagnozy ani leczenia. Zawsze skonsultuj się z lekarzem, lekarzem lub wykwalifikowanym pracownikiem służby zdrowia przed podjęciem jakichkolwiek decyzji medycznych na podstawie informacji wyświetlanych w aplikacji.\n\nDokładność danych i ograniczenia\nDane zdrowotne zbierane z Apple HealthKit i Apple Watch zależą od jakości i ograniczeń tych urządzeń i czujników. PulmoPulse nie może zagwarantować dokładności, kompletności ani wiarygodności danych wyświetlanych w aplikacji. Użytkownicy nie powinni polegać wyłącznie na tej aplikacji przy podejmowaniu krytycznych decyzji zdrowotnych.\n\nBadania i zastosowanie kliniczne\nPulmoPulse jest częścią trwającej inicjatywy badawczej. Korzystanie z aplikacji w środowisku klinicznym lub akademickim musi być zgodne z lokalnymi przepisami, instytucjonalnymi zasadami etycznymi i odpowiednimi procedurami świadomej zgody.\n\nZrzeczenie się odpowiedzialności\nKorzystając z PulmoPulse, zgadzasz się, że programiści i podmioty stowarzyszone nie ponoszą odpowiedzialności za jakiekolwiek szkody, obrażenia lub niekorzystne skutki wynikające z korzystania z aplikacji lub polegania na dostarczanych przez nią danych."
+          }
+        }
+      }
+    },
+    "disclaimer_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disclaimer"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota"
+          }
+        }
+      }
+    },
+    "dob_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date of Birth"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data urodzenia"
+          }
+        }
+      }
+    },
+    "dob_not_set" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date of Birth not set"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie ustalono daty urodzenia"
+          }
+        }
+      }
+    },
+    "done_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gotowe"
+          }
+        }
+      }
+    },
+    "edit_patient_info" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit personal data"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytowanie danych osobowych"
+          }
+        }
+      }
+    },
+    "edit_questionnaire_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit questionnaire"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytuj kwestionariusz"
+          }
+        }
+      }
+    },
+    "erase_all_confirm_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erase All Data"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wymazać wszystkie dane"
+          }
+        }
+      }
+    },
+    "erase_all_confirm_message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to erase all local data? This cannot be undone."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy na pewno chcesz usunąć wszystkie dane lokalne? Tego nie można cofnąć."
+          }
+        }
+      }
+    },
+    "erase_all_data_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erase All Data"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wymazać wszystkie dane"
+          }
+        }
+      }
+    },
+    "fever" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fever"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gorączka"
+          }
+        }
+      }
+    },
+    "first_name_placeholder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First name"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imię"
+          }
+        }
+      }
     },
     "heart_rate_fetch_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart rate fetch failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobieranie tętna nie powiodło się"
+          }
+        }
+      }
     },
     "heart_rate_fetched" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart rate fetched"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobrano tętno"
+          }
+        }
+      }
     },
     "heart_rate_querying" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart rate querying"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapytanie o tętno"
+          }
+        }
+      }
     },
     "heart_rate_type_missing" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart rate type missing"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak typu tętna"
+          }
+        }
+      }
     },
     "heart_rate_upload_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart rate upload failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesyłanie tętna nie powiodło się"
+          }
+        }
+      }
     },
     "heart_rate_uploaded" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart rate uploaded"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesłano tętno"
+          }
+        }
+      }
+    },
+    "how_do_you_feel_today" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How do you feel today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jak się dzisiaj czujesz?"
+          }
+        }
+      }
+    },
+    "how_was_your_appetite" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How was your appetite today?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jaki był Wasz dzisiejszy apetyt?"
+          }
+        }
+      }
+    },
+    "how_well_did_you_sleep" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How well did you sleep last night?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jak dobrze spałeś ostatniej nocy?"
+          }
+        }
+      }
+    },
+    "increased_mucus" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Increased mucus"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zwiększony śluz"
+          }
+        }
+      }
+    },
+    "language_hint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are using your default iPhone language. You can change the language of the app in the iPhone settings."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Używamy domyślnego języka iPhone'a. Możesz zmienić język aplikacji w ustawieniach iPhone'a."
+          }
+        }
+      }
+    },
+    "language_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Język"
+          }
+        }
+      }
+    },
+    "last_name_placeholder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last name"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwisko"
+          }
+        }
+      }
     },
     "last_upload_update_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last upload update failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostatnia aktualizacja przesyłania nie powiodła się"
+          }
+        }
+      }
     },
     "last_upload_updated" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last upload updated"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaktualizowano ostatnio przesłane pliki"
+          }
+        }
+      }
+    },
+    "legal_disclosure_body" : {
+      "comment" : "Body text for Legal Disclosure",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legal Disclosure\n \nApp Name: PulmoPulse \nDeveloper: Wolfgang Kleinhäntz\nAddress: Lenartowicza 17B/87, 35-051 Rzeszow, Poland\nContact Email: wolfgang.kleinhaenz@gmail.com \nPhone Number: +49 172 863 17 38\n \nThis legal disclosure is in accordance with §5 TMG (Germany) and other applicable laws regarding digital services in the EU."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujawnienie informacji prawnych\n \nNazwa aplikacji: PulmoPulse \nDeweloper: Wolfgang Kleinhäntz\nAdres: ul. Lenartowicza 17B/87, 35-051 Rzeszów\nKontaktowy adres e-mail: wolfgang.kleinhaenz@gmail.com \nNumer telefonu: +49 172 863 17 38\n \nUjawnienie danych prawnych jest zgodne z §5 TMG (Niemcy) i innymi obowiązującymi przepisami dotyczącymi usług cyfrowych w UE."
+          }
+        }
+      }
+    },
+    "legal_disclosure_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legal disclosure"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujawnianie informacji prawnych"
+          }
+        }
+      }
+    },
+    "legal_info_header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legal info"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota prawna"
+          }
+        }
+      }
     },
     "metadata_upload_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metadata upload failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przekazywanie metadanych nie powiodło się"
+          }
+        }
+      }
     },
     "metadata_uploaded" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metadata uploaded"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesłane metadane"
+          }
+        }
+      }
+    },
+    "mild" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mild"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Łagodny"
+          }
+        }
+      }
+    },
+    "moderate" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moderate"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moderuj"
+          }
+        }
+      }
+    },
+    "new_questionnaire_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New questionnaire"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowy kwestionariusz"
+          }
+        }
+      }
+    },
+    "no" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie"
+          }
+        }
+      }
+    },
+    "no_questionnaires_subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the + button to create your first entry."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stuknij przycisk +, aby utworzyć swój pierwszy wpis."
+          }
+        }
+      }
+    },
+    "no_questionnaires_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No questionnaires yet"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak kwestionariuszy"
+          }
+        }
+      }
     },
     "no_samples_found" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No samples found"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie znaleziono próbek"
+          }
+        }
+      }
     },
     "no_user_abort_upload" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No user abort upload"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie przerywa przesyłania przez użytkownika"
+          }
+        }
+      }
+    },
+    "no_user_id_log" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No user ID"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak identyfikatora użytkownika"
+          }
+        }
+      }
     },
     "no_user_skip_metadata" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no user skip metadata"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak pomijania metadanych przez użytkownika"
+          }
+        }
+      }
+    },
+    "none" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak"
+          }
+        }
+      }
+    },
+    "none_of_the_above" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None of the above"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Żadne z powyższych"
+          }
+        }
+      }
+    },
+    "not_sure" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not sure"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie mam pewności"
+          }
+        }
+      }
     },
     "oxygen_fetch_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oxygen fetch failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobieranie tlenu nie powiodło się"
+          }
+        }
+      }
     },
     "oxygen_querying" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oxygen querying"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapytanie o tlen"
+          }
+        }
+      }
     },
     "oxygen_samples_fetched" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oxygen samples fetched"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobrane próbki tlenu"
+          }
+        }
+      }
     },
     "oxygen_type_unavailable" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oxygen type unavailable"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rodzaj tlenu niedostępny"
+          }
+        }
+      }
     },
     "oxygen_upload_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oxygen upload failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesyłanie tlenu nie powiodło się"
+          }
+        }
+      }
     },
     "oxygen_uploaded" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oxygen uploaded"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlen przesłany"
+          }
+        }
+      }
+    },
+    "patient_info_section" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patient information"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informacja o pacjencie"
+          }
+        }
+      }
+    },
+    "patient_setup_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patient setup"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfiguracja pacjenta"
+          }
+        }
+      }
+    },
+    "questionnaires_title" : {
+      "comment" : "Title for the list of questionnaires",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questionnaires"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kwestionariusze"
+          }
+        }
+      }
+    },
+    "rating_scale_hint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(1 = very bad, 5 = very good)"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(1 = bardzo źle, 5 = bardzo dobrze)"
+          }
+        }
+      }
     },
     "respiratory_fetch_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respiratory data fetch failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobieranie danych o oddychaniu nie powiodło się"
+          }
+        }
+      }
     },
     "respiratory_querying" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respiratory data querying"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wykonywanie zapytań dotyczących danych układu oddechowego"
+          }
+        }
+      }
     },
     "respiratory_samples_fetched" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respiratory samples fetched"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobrano próbki oddechowe"
+          }
+        }
+      }
     },
     "respiratory_type_unavailable" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respiratory type unavailable"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Typ układu oddechowego niedostępny"
+          }
+        }
+      }
     },
     "respiratory_upload_failed" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respiratory data upload failed"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przekazywanie danych o drogach oddechowych nie powiodło się"
+          }
+        }
+      }
     },
     "respiratory_uploaded" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respiratory data uploaded"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesłane dane dotyczące układu oddechowego"
+          }
+        }
+      }
     },
     "samples_fetched" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samples fetched"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobrane próbki"
+          }
+        }
+      }
+    },
+    "save_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisz"
+          }
+        }
+      }
+    },
+    "send_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyślij"
+          }
+        }
+      }
+    },
+    "send_data_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send data"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wysyłanie danych"
+          }
+        }
+      }
+    },
+    "settings_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ustawienia"
+          }
+        }
+      }
+    },
+    "severe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Severe"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poważne"
+          }
+        }
+      }
     },
     "sleep_fetch_error" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep fetch error"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Błąd pobierania ze stanu uśpienia"
+          }
+        }
+      }
     },
     "sleep_querying" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep querying"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wykonywanie zapytań dotyczących snu"
+          }
+        }
+      }
     },
     "sleep_samples_fetched" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep samples fetched"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobrano próbki snu"
+          }
+        }
+      }
     },
     "sleep_type_unavailable" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep type unavailable"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Typ uśpienia niedostępny"
+          }
+        }
+      }
     },
     "sleep_upload_error" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep data upload error"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Błąd przesyłania danych dotyczących snu"
+          }
+        }
+      }
     },
     "sleep_uploaded" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep data uploaded"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesłane dane dotyczące snu"
+          }
+        }
+      }
     },
     "steps_fetch_error" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steps fetch error"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Błąd pobierania kroków"
+          }
+        }
+      }
     },
     "steps_querying" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steps querying"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wykonywanie zapytań dotyczących kroków"
+          }
+        }
+      }
     },
     "steps_samples_fetched" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steps samples fetched"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobrane próbki kroków"
+          }
+        }
+      }
     },
     "steps_type_unavailable" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steps type unavailable"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Typ kroków jest niedostępny"
+          }
+        }
+      }
     },
     "steps_upload_error" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steps upload error"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Błąd przesyłania kroków"
+          }
+        }
+      }
     },
     "steps_uploaded" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steps uploaded"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesłane kroki"
+          }
+        }
+      }
+    },
+    "theme_dark" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciemny"
+          }
+        }
+      }
+    },
+    "theme_light" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jasny"
+          }
+        }
+      }
+    },
+    "theme_system" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System"
+          }
+        }
+      }
+    },
+    "transfer_nav_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer"
+          }
+        }
+      }
+    },
+    "upload_cancelled_log" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload cancelled"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesyłanie zostało anulowane"
+          }
+        }
+      }
+    },
+    "upload_confirm_message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This action will send all current patient data to the server."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta akcja spowoduje wysłanie wszystkich aktualnych danych pacjenta na serwer."
+          }
+        }
+      }
+    },
+    "upload_confirm_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jesteś pewny?"
+          }
+        }
+      }
+    },
+    "upload_questionnaires_no_health_log" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload questionnaires no health data"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prześlij kwestionariusze bez danych zdrowotnych"
+          }
+        }
+      }
     },
     "upload_started" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload started"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesyłanie rozpoczęte"
+          }
+        }
+      }
+    },
+    "upload_summary_log" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload summary"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podsumowanie przesyłania"
+          }
+        }
+      }
+    },
+    "uploaded_questionnaires_log" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uploaded questionnaires"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesłane kwestionariusze"
+          }
+        }
+      }
     },
     "uploading_from_days" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uploading from "
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesyłanie z "
+          }
+        }
+      }
+    },
+    "uploading_metadata_log" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uploading metadata"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesyłanie metadanych"
+          }
+        }
+      }
+    },
+    "uploading_progress_text" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uploading progress"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postęp przesyłania"
+          }
+        }
+      }
+    },
+    "uploading_questionnaires_log" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uploading questionnaires"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesyłanie kwestionariuszy"
+          }
+        }
+      }
+    },
+    "version_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wersja"
+          }
+        }
+      }
     },
     "Wolfgang Kleinhaentz" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolfgang Kleinhäntz"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolfgang Kleinhäntz"
+          }
+        }
+      }
+    },
+    "yes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tak"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
