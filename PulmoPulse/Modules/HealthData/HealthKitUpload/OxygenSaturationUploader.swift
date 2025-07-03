@@ -27,7 +27,7 @@ class OxygenSaturationUploader: HealthDataUploader {
     }
 
     func fetchSamples(
-        since _: Date,
+        since startDate: Date,
         log: @escaping (String) -> Void,
         completion: @escaping ([HKQuantitySample]) -> Void
     ) {
@@ -38,11 +38,10 @@ class OxygenSaturationUploader: HealthDataUploader {
         }
 
         let calendar = Calendar.current
-        let fallback = calendar.date(byAdding: .day, value: -7, to: Date())!
-        let startDate = calendar.startOfDay(for: manager?.getOverrideStartDate() ?? fallback)
+        let start = calendar.startOfDay(for: startDate)
         let endDate = Date()
 
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+        let predicate = HKQuery.predicateForSamples(withStart: start, end: endDate, options: [])
         let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
 
         let query = HKSampleQuery(
@@ -61,7 +60,7 @@ class OxygenSaturationUploader: HealthDataUploader {
             completion(samples)
         }
 
-        log("🫁 " + NSLocalizedString("oxygen_querying", comment: ""))
+        log("🫁 " + String(format: NSLocalizedString("oxygen_querying", comment: ""), start.formatted()))
         healthStore.execute(query)
     }
 
