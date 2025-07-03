@@ -34,18 +34,28 @@ struct SleepUploader: HealthDataUploader {
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
+        // Not used in this uploader
+        completion(0)
+    }
+
+    func uploadSince(
+        startDate: Date,
+        userId: String,
+        progressHandler: @escaping (Int, Int) -> Void,
+        logHandler: @escaping (String) -> Void,
+        completion: @escaping (Int) -> Void
+    ) {
         guard let type = HKCategoryType.categoryType(forIdentifier: .sleepAnalysis) else {
-            log("❌ " + NSLocalizedString("sleep_type_unavailable", comment: ""))
+            logHandler("❌ " + NSLocalizedString("sleep_type_unavailable", comment: ""))
             completion(0)
             return
         }
 
         let calendar = Calendar.current
-        let fallbackStart = calendar.date(byAdding: .day, value: -5, to: Date())!
-        let startDate = calendar.startOfDay(for: manager?.getOverrideStartDate() ?? fallbackStart)
+        let start = calendar.startOfDay(for: startDate)
         let endDate = Date()
 
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+        let predicate = HKQuery.predicateForSamples(withStart: start, end: endDate, options: [])
         let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
 
         let query = HKSampleQuery(
@@ -55,12 +65,12 @@ struct SleepUploader: HealthDataUploader {
             sortDescriptors: [sort]
         ) { _, results, error in
             guard let samples = results as? [HKCategorySample], error == nil else {
-                log("❌ " + String(format: NSLocalizedString("sleep_fetch_error", comment: ""), error?.localizedDescription ?? "unknown"))
+                logHandler("❌ " + String(format: NSLocalizedString("sleep_fetch_error", comment: ""), error?.localizedDescription ?? "unknown"))
                 completion(0)
                 return
             }
 
-            log("😴 " + String(format: NSLocalizedString("sleep_samples_fetched", comment: ""), samples.count))
+            logHandler("😴 " + String(format: NSLocalizedString("sleep_samples_fetched", comment: ""), samples.count))
 
             var sleepByDay: [String: (asleep: TimeInterval, inBed: TimeInterval, sessions: Int)] = [:]
             let formatter = DateFormatter()
@@ -95,7 +105,7 @@ struct SleepUploader: HealthDataUploader {
             let group = DispatchGroup()
 
             // ✅ Inline log at start
-            log("🛌 " + String(format: NSLocalizedString("sleep_upload_progress", comment: ""), uploaded, total))
+            logHandler("🛌 " + String(format: NSLocalizedString("sleep_upload_progress", comment: ""), uploaded, total))
 
             for (dayKey, entry) in sleepByDay {
                 let date = formatter.date(from: dayKey) ?? Date()
@@ -118,13 +128,13 @@ struct SleepUploader: HealthDataUploader {
                     .document(dayKey)
                     .setData(data) { error in
                         if let error = error {
-                            log("❌ " + String(format: NSLocalizedString("sleep_upload_error", comment: ""), dayKey, error.localizedDescription))
+                            logHandler("❌ " + String(format: NSLocalizedString("sleep_upload_error", comment: ""), dayKey, error.localizedDescription))
                         } else {
                             uploaded += 1
-                            progress(uploaded, total)
+                            progressHandler(uploaded, total)
 
                             // ✅ Inline update log
-                            log("🛌 " + String(format: NSLocalizedString("sleep_upload_progress", comment: ""), uploaded, total))
+                            logHandler("🛌 " + String(format: NSLocalizedString("sleep_upload_progress", comment: ""), uploaded, total))
                         }
                         group.leave()
                     }
@@ -138,7 +148,7 @@ struct SleepUploader: HealthDataUploader {
             }
         }
 
-        log("🛌 " + String(format: NSLocalizedString("sleep_querying", comment: ""), startDate.formatted()))
+        logHandler("🛌 " + String(format: NSLocalizedString("sleep_querying", comment: ""), start.formatted()))
         healthStore.execute(query)
     }
 }
