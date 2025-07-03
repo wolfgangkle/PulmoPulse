@@ -17,9 +17,11 @@ struct PatientModel: Codable {
     }
 
     var birthDateFormatted: String {
+        guard let birthDate else { return "" }
+
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        return formatter.string(from: birthDate!)
+        return formatter.string(from: birthDate)
     }
 }
 
