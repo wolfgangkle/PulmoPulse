@@ -118,7 +118,11 @@ class DataUploader {
 
         let uploader = uploaders[uploaderIndex]
 
-        HealthDataManager.shared.getEffectiveUploadStartDate(for: uploader.typeIdentifier, userId: userId) { startDate in
+        HealthDataManager.shared.getEffectiveUploadStartDate(
+            for: uploader.typeIdentifier,
+            userId: userId,
+            maxDaysBack: HealthDataManager.shared.dataUploadWindowDays
+        ) { startDate in
             uploader.uploadSince(
                 startDate: startDate,
                 userId: userId,
