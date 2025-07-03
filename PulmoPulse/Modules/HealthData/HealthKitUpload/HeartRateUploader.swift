@@ -73,9 +73,13 @@ struct HeartRateUploader: HealthDataUploader {
             grouped[dateKey, default: []].append(value)
         }
 
+        let total = grouped.count
         var uploaded = 0
         let group = DispatchGroup()
         var latestDate: Date?
+
+        // ✅ Log initial inline progress
+        log("💓 " + String(format: NSLocalizedString("heart_rate_upload_progress", comment: ""), uploaded, total))
 
         for (dateKey, values) in grouped {
             guard !values.isEmpty else { continue }
@@ -111,8 +115,10 @@ struct HeartRateUploader: HealthDataUploader {
                         log("❌ " + String(format: NSLocalizedString("heart_rate_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ " + String(format: NSLocalizedString("heart_rate_uploaded", comment: ""), dateKey))
-                        progress(uploaded, grouped.count)
+                        progress(uploaded, total)
+
+                        // ✅ Update progress line
+                        log("💓 " + String(format: NSLocalizedString("heart_rate_upload_progress", comment: ""), uploaded, total))
                     }
                     group.leave()
                 }

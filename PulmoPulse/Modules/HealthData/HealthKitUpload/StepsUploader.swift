@@ -66,7 +66,6 @@ struct StepsUploader: HealthDataUploader {
         log: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        _ = Calendar.current
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
 
@@ -84,6 +83,9 @@ struct StepsUploader: HealthDataUploader {
         var uploaded = 0
         let group = DispatchGroup()
         var latestDate: Date?
+
+        // ✅ Inline log at start
+        log("👟 " + String(format: NSLocalizedString("steps_upload_progress", comment: ""), uploaded, total))
 
         for (dateKey, values) in grouped {
             guard !values.isEmpty else { continue }
@@ -112,7 +114,7 @@ struct StepsUploader: HealthDataUploader {
                         log("❌ " + String(format: NSLocalizedString("steps_upload_error", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ " + String(format: NSLocalizedString("steps_uploaded", comment: ""), dateKey, steps))
+                        log("👟 " + String(format: NSLocalizedString("steps_upload_progress", comment: ""), uploaded, total))
                         progress(uploaded, total)
                     }
                     group.leave()

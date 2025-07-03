@@ -39,16 +39,32 @@ extension HealthDataUploader {
         logHandler: @escaping (String) -> Void,
         completion: @escaping (Int) -> Void
     ) {
-        let startMessage = String(format: NSLocalizedString("upload_started", comment: ""), typeIdentifier)
-        logHandler("📡 \(startMessage)")
+        let name = typeIdentifier // or replace with displayName if you add that later
+
+        if HealthDataManager.shared.isCancelled {
+            let cancelledMessage = NSLocalizedString("upload_cancelled_log", comment: "Upload cancelled")
+            logHandler("❌ \(cancelledMessage)")
+            completion(0)
+            return
+        }
+
+        let startMessageTemplate = NSLocalizedString("upload_started", comment: "Upload start")
+        logHandler("📡 " + String(format: startMessageTemplate, name))
+
+        let fetchStart = Date()
 
         fetchSamples(since: startDate, log: logHandler) { samples in
-            let fetchedMessage = String(format: NSLocalizedString("samples_fetched", comment: ""), samples.count, typeIdentifier)
-            logHandler("📊 \(fetchedMessage)")
+            let duration = Date().timeIntervalSince(fetchStart)
+
+            let fetchedMessageTemplate = NSLocalizedString("samples_fetched", comment: "Samples fetched")
+            logHandler("📊 " + String(format: fetchedMessageTemplate, samples.count, name))
+
+            let fetchDurationMessage = NSLocalizedString("fetch_duration_log", comment: "Fetch duration")
+            logHandler("⏱ " + String(format: fetchDurationMessage, duration))
 
             if samples.isEmpty {
-                let noSamplesMessage = String(format: NSLocalizedString("no_samples_found", comment: ""), typeIdentifier)
-                logHandler("⚠️ \(noSamplesMessage)")
+                let noSamplesMessageTemplate = NSLocalizedString("no_samples_found", comment: "No samples found")
+                logHandler("⚠️ " + String(format: noSamplesMessageTemplate, name))
                 completion(0)
             } else {
                 self.uploadSamples(
@@ -62,4 +78,5 @@ extension HealthDataUploader {
         }
     }
 }
+
 

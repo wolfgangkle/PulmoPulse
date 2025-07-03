@@ -89,6 +89,9 @@ struct BodyWeightUploader: HealthDataUploader {
         let group = DispatchGroup()
         var latestDate: Date?
 
+        // ✅ Log initial status
+        log("⚖️ " + String(format: NSLocalizedString("body_weight_upload_progress", comment: ""), uploaded, total))
+
         for (dateKey, sample) in latestPerDay {
             if manager?.isCancelled == true { break }
 
@@ -115,8 +118,10 @@ struct BodyWeightUploader: HealthDataUploader {
                         log("❌ " + String(format: NSLocalizedString("body_weight_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ " + String(format: NSLocalizedString("body_weight_uploaded", comment: ""), dateKey, roundedKg))
                         progress(uploaded, total)
+
+                        // ✅ Inline progress update
+                        log("⚖️ " + String(format: NSLocalizedString("body_weight_upload_progress", comment: ""), uploaded, total))
                     }
                     group.leave()
                 }

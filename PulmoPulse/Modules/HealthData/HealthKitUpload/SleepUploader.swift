@@ -94,6 +94,9 @@ struct SleepUploader: HealthDataUploader {
             var latestDate: Date?
             let group = DispatchGroup()
 
+            // ✅ Inline log at start
+            log("🛌 " + String(format: NSLocalizedString("sleep_upload_progress", comment: ""), uploaded, total))
+
             for (dayKey, entry) in sleepByDay {
                 let date = formatter.date(from: dayKey) ?? Date()
                 latestDate = max(latestDate ?? date, date)
@@ -118,8 +121,10 @@ struct SleepUploader: HealthDataUploader {
                             log("❌ " + String(format: NSLocalizedString("sleep_upload_error", comment: ""), dayKey, error.localizedDescription))
                         } else {
                             uploaded += 1
-                            log("✅ " + String(format: NSLocalizedString("sleep_uploaded", comment: ""), dayKey))
                             progress(uploaded, total)
+
+                            // ✅ Inline update log
+                            log("🛌 " + String(format: NSLocalizedString("sleep_upload_progress", comment: ""), uploaded, total))
                         }
                         group.leave()
                     }

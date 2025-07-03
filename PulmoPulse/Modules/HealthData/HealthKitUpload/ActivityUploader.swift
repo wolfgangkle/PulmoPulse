@@ -81,6 +81,9 @@ struct ActivityUploader: HealthDataUploader {
         let group = DispatchGroup()
         var latestDate: Date?
 
+        // ✅ One-line status at beginning
+        log("📤 " + String(format: NSLocalizedString("activity_upload_progress", comment: ""), uploaded, grouped.count))
+
         for (dateKey, values) in grouped {
             guard !values.isEmpty else { continue }
 
@@ -108,8 +111,10 @@ struct ActivityUploader: HealthDataUploader {
                         log("❌ " + String(format: NSLocalizedString("activity_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ " + String(format: NSLocalizedString("activity_uploaded", comment: ""), dateKey, roundedTotal))
                         progress(uploaded, grouped.count)
+
+                        // ✅ Overwrite progress line instead of spamming
+                        log("📤 " + String(format: NSLocalizedString("activity_upload_progress", comment: ""), uploaded, grouped.count))
                     }
                     group.leave()
                 }

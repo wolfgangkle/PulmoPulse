@@ -90,6 +90,9 @@ class OxygenSaturationUploader: HealthDataUploader {
         let group = DispatchGroup()
         var latestDate: Date?
 
+        // ✅ Log initial progress line
+        log("🫁 " + String(format: NSLocalizedString("oxygen_upload_progress", comment: ""), uploaded, total))
+
         for (dateKey, values) in grouped {
             guard !values.isEmpty else { continue }
 
@@ -124,8 +127,10 @@ class OxygenSaturationUploader: HealthDataUploader {
                         log("❌ " + String(format: NSLocalizedString("oxygen_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ " + String(format: NSLocalizedString("oxygen_uploaded", comment: ""), dateKey, roundedAvg))
                         progress(uploaded, total)
+
+                        // ✅ Update the inline progress log
+                        log("🫁 " + String(format: NSLocalizedString("oxygen_upload_progress", comment: ""), uploaded, total))
                     }
                     group.leave()
                 }

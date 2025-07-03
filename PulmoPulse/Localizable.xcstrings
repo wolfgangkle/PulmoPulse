@@ -38,13 +38,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activity fetch failed"
+            "value" : "Failed to fetch activity data: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobieranie aktywności nie powiodło się"
+            "value" : "Nie udało się pobrać danych aktywności: %@"
           }
         }
       }
@@ -54,13 +54,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activity fetched"
+            "value" : "%d activity samples fetched"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobrano aktywność"
+            "value" : "Pobrano %d próbek aktywności"
           }
         }
       }
@@ -70,13 +70,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activity querying from"
+            "value" : "Querying activity data starting from %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wykonywanie zapytań dotyczących działań z poziomu"
+            "value" : "Wyszukiwanie danych aktywności od %@"
           }
         }
       }
@@ -102,29 +102,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activity upload failed"
+            "value" : "Upload failed for %@: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przekazywanie działania nie powiodło się"
+            "value" : "Nie udało się przesłać %@: %@"
           }
         }
       }
     },
-    "activity_uploaded" : {
+    "activity_upload_progress" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activity uploaded"
+            "value" : "Uploading activity samples... %d of %d"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesłana aktywność"
+            "value" : "Przesyłanie danych aktywności... %d z %d"
           }
         }
       }
@@ -134,13 +134,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "All uploaders finished"
+            "value" : "Finished uploading %d samples."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wszyscy przesyłający zakończyli"
+            "value" : "Zakończono przesyłanie %d próbek."
           }
         }
       }
@@ -182,13 +182,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Body weight fetch failed"
+            "value" : "Failed to fetch body weight samples: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobieranie masy ciała nie powiodło się"
+            "value" : "Nie udało się pobrać danych o masie ciała: %@"
           }
         }
       }
@@ -198,13 +198,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Body weight fetched"
+            "value" : "%d body weight samples fetched"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobrana masa ciała"
+            "value" : "Pobrano %d próbek masy ciała"
           }
         }
       }
@@ -246,29 +246,46 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Body weight upload failed"
+            "value" : "Failed to upload body weight for %@: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesyłanie masy ciała nie powiodło się"
+            "value" : "Nie udało się przesłać masy ciała dla %@: %@"
+          }
+        }
+      }
+    },
+    "body_weight_upload_progress" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uploading body weight samples... %d of %d"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesyłanie danych masy ciała... %d z %d"
           }
         }
       }
     },
     "body_weight_uploaded" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Body weight uploaded"
+            "value" : "Uploaded body weight for %@: %.1f kg"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesłano masę ciała"
+            "value" : "Przesłano masę ciała dla %@: %.1f kg"
           }
         }
       }
@@ -788,6 +805,23 @@
         }
       }
     },
+    "fetch_duration_log" : {
+      "comment" : "Fetch duration",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fetching took %.2f seconds"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobieranie danych trwało %.2f sekundy"
+          }
+        }
+      }
+    },
     "fever" : {
       "localizations" : {
         "en" : {
@@ -825,13 +859,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Heart rate fetch failed"
+            "value" : "Failed to fetch heart rate samples: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobieranie tętna nie powiodło się"
+            "value" : "Nie udało się pobrać danych tętna: %@"
           }
         }
       }
@@ -841,13 +875,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Heart rate fetched"
+            "value" : "%d heart rate samples fetched"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobrano tętno"
+            "value" : "Pobrano %d próbek tętna"
           }
         }
       }
@@ -857,13 +891,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Heart rate querying"
+            "value" : "Querying heart rate data starting from %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zapytanie o tętno"
+            "value" : "Wyszukiwanie danych tętna od %@"
           }
         }
       }
@@ -889,29 +923,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Heart rate upload failed"
+            "value" : "Failed to upload heart rate for %@: %@\t"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesyłanie tętna nie powiodło się"
+            "value" : "Nie udało się przesłać danych tętna dla %@: %@"
           }
         }
       }
     },
-    "heart_rate_uploaded" : {
+    "heart_rate_upload_progress" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Heart rate uploaded"
+            "value" : "Uploading heart rate samples... %d of %d"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesłano tętno"
+            "value" : "Przesyłanie danych tętna... %d z %d"
           }
         }
       }
@@ -1033,13 +1067,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Last upload update failed"
+            "value" : "Failed to update last upload date for %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ostatnia aktualizacja przesyłania nie powiodła się"
+            "value" : "Nie udało się zaktualizować daty ostatniego przesłania dla %@"
           }
         }
       }
@@ -1049,13 +1083,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Last upload updated"
+            "value" : "Last upload date updated for %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zaktualizowano ostatnio przesłane pliki"
+            "value" : "Zaktualizowano datę ostatniego przesłania dla %@"
           }
         }
       }
@@ -1238,17 +1272,18 @@
       }
     },
     "no_samples_found" : {
+      "comment" : "No samples found",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No samples found"
+            "value" : "No %@ samples found"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nie znaleziono próbek"
+            "value" : "Nie znaleziono próbek %@"
           }
         }
       }
@@ -1354,13 +1389,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oxygen fetch failed"
+            "value" : "Failed to fetch oxygen saturation: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobieranie tlenu nie powiodło się"
+            "value" : "Nie udało się pobrać danych o saturacji: %@"
           }
         }
       }
@@ -1386,13 +1421,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oxygen samples fetched"
+            "value" : "%d oxygen saturation samples fetched"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobrane próbki tlenu"
+            "value" : "Pobrano %d próbek saturacji"
           }
         }
       }
@@ -1418,29 +1453,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oxygen upload failed"
+            "value" : "Failed to upload oxygen saturation for %@: %@\t"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesyłanie tlenu nie powiodło się"
+            "value" : "Nie udało się przesłać saturacji dla %@: %@"
           }
         }
       }
     },
-    "oxygen_uploaded" : {
+    "oxygen_upload_progress" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oxygen uploaded"
+            "value" : "Uploading oxygen saturation samples... %d of %d"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tlen przesłany"
+            "value" : "Przesyłanie danych saturacji... %d z %d"
           }
         }
       }
@@ -1515,13 +1550,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respiratory data fetch failed"
+            "value" : "Failed to fetch respiratory rate: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobieranie danych o oddychaniu nie powiodło się"
+            "value" : "Nie udało się pobrać danych oddechowych: %@"
           }
         }
       }
@@ -1547,13 +1582,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respiratory samples fetched"
+            "value" : "%d respiratory samples fetched"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobrano próbki oddechowe"
+            "value" : "Pobrano %d próbek oddechu"
           }
         }
       }
@@ -1579,45 +1614,46 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respiratory data upload failed"
+            "value" : "Failed to upload respiratory data for %@: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przekazywanie danych o drogach oddechowych nie powiodło się"
+            "value" : "Nie udało się przesłać danych oddechowych dla %@: %@"
           }
         }
       }
     },
-    "respiratory_uploaded" : {
+    "respiratory_upload_progress" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respiratory data uploaded"
+            "value" : "Uploading respiratory samples... %d of %d\t"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesłane dane dotyczące układu oddechowego"
+            "value" : "Przesyłanie danych oddechowych... %d z %d"
           }
         }
       }
     },
     "samples_fetched" : {
+      "comment" : "Samples fetched",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Samples fetched"
+            "value" : "%d %@ samples fetched from HealthKit"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobrane próbki"
+            "value" : "Pobrano %d próbek %@ z HealthKit"
           }
         }
       }
@@ -1707,13 +1743,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sleep fetch error"
+            "value" : "Failed to fetch sleep data: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Błąd pobierania ze stanu uśpienia"
+            "value" : "Nie udało się pobrać danych snu: %@"
           }
         }
       }
@@ -1723,13 +1759,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sleep querying"
+            "value" : "Querying sleep data starting from %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wykonywanie zapytań dotyczących snu"
+            "value" : "Wyszukiwanie danych snu od %@"
           }
         }
       }
@@ -1739,13 +1775,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sleep samples fetched"
+            "value" : "%d sleep samples fetched"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobrano próbki snu"
+            "value" : "Pobrano %d próbek snu"
           }
         }
       }
@@ -1771,29 +1807,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sleep data upload error"
+            "value" : "Failed to upload sleep data for %@: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Błąd przesyłania danych dotyczących snu"
+            "value" : "Nie udało się przesłać danych snu dla %@: %@"
           }
         }
       }
     },
-    "sleep_uploaded" : {
+    "sleep_upload_progress" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sleep data uploaded"
+            "value" : "Uploading sleep samples... %d of %d"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesłane dane dotyczące snu"
+            "value" : "Przesyłanie danych snu... %d z %d"
           }
         }
       }
@@ -1803,13 +1839,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Steps fetch error"
+            "value" : "Failed to fetch step data: %@\t"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Błąd pobierania kroków"
+            "value" : "Nie udało się pobrać danych kroków: %@"
           }
         }
       }
@@ -1835,13 +1871,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Steps samples fetched"
+            "value" : "%d step samples fetched"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobrane próbki kroków"
+            "value" : "Pobrano %d próbek kroków"
           }
         }
       }
@@ -1867,29 +1903,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Steps upload error"
+            "value" : "Failed to upload step data for %@: %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Błąd przesyłania kroków"
+            "value" : "Nie udało się przesłać danych kroków dla %@: %@"
           }
         }
       }
     },
-    "steps_uploaded" : {
+    "steps_upload_progress" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Steps uploaded"
+            "value" : "Uploading step data… %d of %d"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesłane kroki"
+            "value" : "Przesyłanie danych kroków… %d z %d"
           }
         }
       }
@@ -1959,6 +1995,7 @@
       }
     },
     "upload_cancelled_log" : {
+      "comment" : "Upload cancelled",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2023,17 +2060,18 @@
       }
     },
     "upload_started" : {
+      "comment" : "Upload start",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Upload started"
+            "value" : "Starting upload for %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesyłanie rozpoczęte"
+            "value" : "Rozpoczynanie przesyłania danych dla %@"
           }
         }
       }
@@ -2075,13 +2113,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uploading from "
+            "value" : "Uploading health data from the past %d days (starting: %@)"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przesyłanie z "
+            "value" : "Przesyłanie danych zdrowotnych z ostatnich %d dni (od: %@)"
           }
         }
       }

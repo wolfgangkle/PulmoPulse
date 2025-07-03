@@ -84,6 +84,9 @@ struct RespiratoryRateUploader: HealthDataUploader {
         let group = DispatchGroup()
         var latestDate: Date?
 
+        // ✅ Initial inline log line
+        log("🫁 " + String(format: NSLocalizedString("respiratory_upload_progress", comment: ""), uploaded, total))
+
         for (dateKey, values) in grouped {
             guard !values.isEmpty else { continue }
 
@@ -118,8 +121,10 @@ struct RespiratoryRateUploader: HealthDataUploader {
                         log("❌ " + String(format: NSLocalizedString("respiratory_upload_failed", comment: ""), dateKey, error.localizedDescription))
                     } else {
                         uploaded += 1
-                        log("✅ " + String(format: NSLocalizedString("respiratory_uploaded", comment: ""), dateKey, roundedAvg))
                         progress(uploaded, total)
+
+                        // ✅ Inline log update
+                        log("🫁 " + String(format: NSLocalizedString("respiratory_upload_progress", comment: ""), uploaded, total))
                     }
                     group.leave()
                 }

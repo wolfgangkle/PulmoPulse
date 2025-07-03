@@ -136,7 +136,12 @@ struct DataTransferView: View {
                         },
                         logHandler: { newLog in
                             DispatchQueue.main.async {
-                                uploadLogs.append(newLog)
+                                // ✅ Only replace last line if it's a 📤 progress line
+                                if let last = uploadLogs.last, last.starts(with: "📤"), newLog.starts(with: "📤") {
+                                    uploadLogs[uploadLogs.count - 1] = newLog
+                                } else {
+                                    uploadLogs.append(newLog)
+                                }
                             }
                         },
                         completion: { result in
