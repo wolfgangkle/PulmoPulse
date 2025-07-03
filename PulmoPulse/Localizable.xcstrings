@@ -214,13 +214,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Body weight querying"
+            "value" : "Querying body weight starting from %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zapytanie o masę ciała"
+            "value" : "Wyszukiwanie danych masy ciała od %@"
           }
         }
       }
@@ -1405,13 +1405,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oxygen querying"
+            "value" : "Querying oxygen saturation starting from %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zapytanie o tlen"
+            "value" : "Wyszukiwanie saturacji od %@"
           }
         }
       }
@@ -1566,13 +1566,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respiratory data querying"
+            "value" : "Querying respiratory rate starting from %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wykonywanie zapytań dotyczących danych układu oddechowego"
+            "value" : "Wyszukiwanie częstości oddechów od %@"
           }
         }
       }
@@ -1855,13 +1855,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Steps querying"
+            "value" : "Querying step count starting from %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wykonywanie zapytań dotyczących kroków"
+            "value" : "Wyszukiwanie kroków od %@"
           }
         }
       }

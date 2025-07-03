@@ -19,7 +19,7 @@ struct HeartRateUploader: HealthDataUploader {
     var typeIdentifier: String { "heartRate" }
 
     func fetchSamples(
-        since _: Date,
+        since startDate: Date,
         log: @escaping (String) -> Void,
         completion: @escaping ([HKQuantitySample]) -> Void
     ) {
@@ -29,8 +29,8 @@ struct HeartRateUploader: HealthDataUploader {
             return
         }
 
-        let startDate = Calendar.current.startOfDay(for: manager?.getOverrideStartDate() ?? Date(timeIntervalSinceNow: -7 * 86400))
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [])
+        let start = Calendar.current.startOfDay(for: startDate)
+        let predicate = HKQuery.predicateForSamples(withStart: start, end: Date(), options: [])
         let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
 
         let query = HKSampleQuery(
@@ -49,7 +49,7 @@ struct HeartRateUploader: HealthDataUploader {
             completion(samples)
         }
 
-        log("💓 " + String(format: NSLocalizedString("heart_rate_querying", comment: ""), startDate.formatted()))
+        log("💓 " + String(format: NSLocalizedString("heart_rate_querying", comment: ""), start.formatted()))
         healthStore.execute(query)
     }
 

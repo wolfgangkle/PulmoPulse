@@ -118,22 +118,22 @@ class DataUploader {
 
         let uploader = uploaders[uploaderIndex]
 
-        HealthDataManager.shared.getEffectiveUploadStartDate(for: uploader.typeIdentifier, userId: userId) { startDate in
-            uploader.uploadSince(
-                startDate: startDate,
+        let startDate = HealthDataManager.shared.getOverrideStartDate()
+
+        uploader.uploadSince(
+            startDate: startDate,
+            userId: userId,
+            progressHandler: progressHandler,
+            logHandler: logHandler
+        ) { uploadedCount in
+            uploadNext(
+                uploaderIndex: uploaderIndex + 1,
+                totalUploaded: totalUploaded + uploadedCount,
                 userId: userId,
                 progressHandler: progressHandler,
-                logHandler: logHandler
-            ) { uploadedCount in
-                uploadNext(
-                    uploaderIndex: uploaderIndex + 1,
-                    totalUploaded: totalUploaded + uploadedCount,
-                    userId: userId,
-                    progressHandler: progressHandler,
-                    logHandler: logHandler,
-                    completion: completion
-                )
-            }
+                logHandler: logHandler,
+                completion: completion
+            )
         }
     }
 }
